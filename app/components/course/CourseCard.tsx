@@ -11,10 +11,10 @@ type Props = {
 
 const CourseCard:FC<Props> = ({course,isProfile}) => {
   return (
-    <Link href={ !isProfile? `/course/${course._id}` : `/course-access/${course._id}`}>
+    <Link href={ !isProfile? `/courses/${course._id}` : `/course-access/${course._id}`}>
 
     <div className=" w-full min-h-[35vh] dark:bg-slate-500 dark:bg-opacity-20 backdrop-blur border dark:border-[#ffffff1d] border-[#00000015] dark:shadow-[bg-slate-700] rounded-lg p-3 shadow-sm dark:shadow-inner">
-        <Image src={course?.thumbnail?.url } alt='img not found' width={500} height={180} className='rounded w-full' objectFit='contain'/> 
+        <Image src={course?.thumbnail?.url } alt='img not found' width={500} height={180} className='rounded w-full' objectFit='cover'/> 
         <br />
         <h1 className='font-Poppins text-[16px] dark:text-white text-black'>
             {course.name} 
