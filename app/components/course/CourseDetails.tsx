@@ -3,9 +3,10 @@ import Ratings from "@/app/utils/Ratings";
 import Link from "next/link";
 import { format } from "path";
 import React, { FC } from "react";
-import { IoCheckmarkCircleOutline } from "react-icons/io5";
+import { IoCheckmarkDone } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import CourseContentList from "./CourseContentList";
+import CoursePlayer from "../admin/course/CoursePlayer";
 
 type Props = {
   data: any;
@@ -38,8 +39,8 @@ const CourseDetails: FC<Props> = ({
     <div>
       <div className="w-[90%]  m-auto py-5">
         <div className="w-full flex  flex-col-reverse 800px:flex-row">
-          <div className="w-full 800px:w-[60% ] 800px:pr-5">
-            <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
+          <div className="w-full 800px:w-[55% ] 800px:pr-5">
+            <h1 className="text-[30px] font-Poppins font-[600] text-black dark:text-white">
               {data?.name}
             </h1>
             <div className="flex items-center justify-between pt-3">
@@ -56,23 +57,20 @@ const CourseDetails: FC<Props> = ({
 
             <br />
             <br />
-            <h1 className="text-black dark:text-white">
+            <h1 className="text-[30px] font-Poppins font-[600] text-black dark:text-white">
               What you will learn from this course ?
             </h1>
             <br />
             <div>
               {data?.benefits?.map((benefit: any, index: number) => (
-                <div
-                  className="w-full flex 800px:items-center py-2"
-                  key={index}
-                >
-                  <div className="w-[15%] mr-1">
-                    <IoCheckmarkCircleOutline
+                <div className="w-full py-2 flex" key={index}>
+                  <div className="mr-1">
+                    <IoCheckmarkDone
                       size={20}
                       className="text-black dark:text-white"
                     />
                   </div>
-                  <p className="pl-2 text-black dark:text-white ">
+                  <p className="pl-2 text-black dark:text-white font-Poppins font-[300">
                     {benefit.title}
                   </p>
                 </div>
@@ -80,23 +78,20 @@ const CourseDetails: FC<Props> = ({
               <br />
               <br />
 
-              <h1 className="text-black dark:text-white">
-                What are the prerequisites?
+              <h1 className="text-[30px] font-Poppins font-[600] text-black dark:text-white">
+                What are the prerequisites ?
               </h1>
               <br />
               <div>
                 {data?.prerequisites?.map((benefit: any, index: number) => (
-                  <div
-                    className="w-full flex 800px:items-center py-2"
-                    key={index}
-                  >
-                    <div className="w-[15%] mr-1">
-                      <IoCheckmarkCircleOutline
+                  <div className="w-full py-2 flex" key={index}>
+                    <div className="mr-1 ">
+                      <IoCheckmarkDone
                         size={20}
                         className="text-black dark:text-white"
                       />
                     </div>
-                    <p className="pl-2 text-black dark:text-white ">
+                    <p className="pl-2 text-black dark:text-white font-Poppins font-[300]">
                       {benefit.title}
                     </p>
                   </div>
@@ -104,20 +99,20 @@ const CourseDetails: FC<Props> = ({
                 <br />
                 <br />
                 <div>
-                  <h1 className="pl-2 text-black dark:text-white ">
+                  <h1 className="text-[30px] font-Poppins font-[600] text-black dark:text-white">
                     Course Overview
                   </h1>
 
-                  {/* <CourseContentList data={data?.courseData} isDemo={true} /> */}
+                  <CourseContentList data={data?.courseData} isDemo={true} />
                 </div>
 
                 <br />
                 <br />
                 <div className="w-full">
-                  <h1 className="pl-2 text-black dark:text-white text-[25px] font-[600] font-Poppins">
+                  <h1 className="pl-2 text-black dark:text-white text-[30px] font-[600] font-Poppins">
                     Course Details
                   </h1>
-                  <h1 className="mt-[20px] text-black dark:text-white text-[18px] whitespace-pre-line w-full overflow-hidden font-[600] font-Poppins">
+                  <h1 className="mt-[20px] text-black dark:text-white text-[18px] whitespace-pre-line w-full overflow-hidden font-[400] font-Poppins">
                     {data?.description}
                   </h1>
                 </div>
@@ -178,7 +173,7 @@ const CourseDetails: FC<Props> = ({
           </div>
           <div className="w-full 800px:w-[45%] relative">
             <div className="sticky top-[100px] left-0 z-50 w-full">
-              {/* < CoursePlayer videoUrl={data?.demoUrl} title={data?.title} /> */}
+              <CoursePlayer videoUrl={data?.demoUrl} title={data?.title} />
               <div className="flex items-center">
                 <h1 className="pt-5 text-[25px]  dark:text-white text-black">
                   {data?.price === 0 ? "Free" : data?.price + "$"}
@@ -203,7 +198,7 @@ const CourseDetails: FC<Props> = ({
                     /* onClick={handleOrder} */ className={`${styles.button} !w-[180px] my-3 font-Poppins !bg-[#ff1040]`}
                   >
                     {" "}
-                    Buy Now {data?.price +" "+ "$"}
+                    Buy Now {data?.price + " " + "$"}
                   </div>
                 )}
               </div>
