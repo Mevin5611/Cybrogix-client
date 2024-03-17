@@ -50,10 +50,7 @@ console.log(course);
               <CourseDetails
                 data={course}
                 id={id}
-                //activeVideo={activeVideo}
-                //setActiveVideo={setActiveVideo}
-                //userData={userData}
-                //refetch={refetch}
+               
               />
             </div>
             

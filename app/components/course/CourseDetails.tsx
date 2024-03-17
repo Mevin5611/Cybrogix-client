@@ -2,8 +2,8 @@ import { styles } from "@/app/styles/style";
 import Ratings from "@/app/utils/Ratings";
 import Link from "next/link";
 import { format } from "path";
-import React, { FC } from "react";
-import { IoCheckmarkDone } from "react-icons/io5";
+import React, { FC, useState } from "react";
+import { IoCheckmarkDone, IoCloseOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import CourseContentList from "./CourseContentList";
 import CoursePlayer from "../admin/course/CoursePlayer";
@@ -11,20 +11,14 @@ import CoursePlayer from "../admin/course/CoursePlayer";
 type Props = {
   data: any;
   id: string;
-  /*  activeVideo: number;
-  setActiveVideo: (activeVideo: number) => void;
-  userData: any;
-  refetch: any; */
 };
 
 const CourseDetails: FC<Props> = ({
   id,
   data,
-  /* activeVideo,
-  setActiveVideo,
-  userData,
-  refetch, */
+
 }) => {
+  const [open,setOpen] = useState(false)
   const { user } = useSelector((state: any) => state.auth);
 
   const discountPercentage =
@@ -34,6 +28,10 @@ const CourseDetails: FC<Props> = ({
 
   const isPurchsed =
     user && user.courses.find((item: any) => item._id === data._id);
+
+    const handleBuy = ()=>{
+      setOpen(true)
+    }
 
   return (
     <div>
@@ -195,7 +193,7 @@ const CourseDetails: FC<Props> = ({
                   </Link>
                 ) : (
                   <div
-                    /* onClick={handleOrder} */ className={`${styles.button} !w-[180px] my-3 font-Poppins !bg-[#ff1040]`}
+                    onClick={handleBuy} className={`${styles.button} !w-[180px] my-3 font-Poppins !bg-[#ff1040]`}
                   >
                     {" "}
                     Buy Now {data?.price + " " + "$"}
@@ -220,7 +218,7 @@ const CourseDetails: FC<Props> = ({
         </div>
       </div>
       <>
-        {/* {
+        {
         open && (
           <div className="w-full h-screen bg-[#00000036] fixed top-0 left-0 z-50 flex items-center justify-center">
             <div className="w-[500px] min-h-[500px] bg-white rounded-xl shadow-lg p-3 ">
@@ -228,19 +226,12 @@ const CourseDetails: FC<Props> = ({
                 <IoCloseOutline size={40} className='text-black cursor-pointer' onClick={() => setOpen(false)} />
               </div>
               <div className="w-full">
-                {
-                  stripePromise && clientSecret && (
-                    <Elements stripe={stripePromise} options={{ clientSecret }}>
-                      <CheckOutForm setOpen={setOpen} data={data} paymentLoading={paymentLoading} user={user} />
-
-                    </Elements>
-                  )
-                }
+                <h1>dfgdfgdfgdfgdf</h1>
               </div>
             </div>
           </div>
         )
-      } */}
+      }
       </>
     </div>
   );
