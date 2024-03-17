@@ -29,13 +29,16 @@ console.log(course);
         <Loader />
       ) : (
         <>
+        
           <Header
             activeItem={1}
             open={open}
             setOpen={setOpen}
             route={route}
             setRoute={setRoute}
+            
           />
+         
           <div className="w-full grid 800px:grid-cols-10">
             <Heading
               title={course?.courseData[0]?.title}
@@ -43,7 +46,7 @@ console.log(course);
               keyword={course?.courseData[0]?.tags}
             />
 
-            <div className="col-span-7">
+            <div className="col-span-10">
               <CourseDetails
                 data={course}
                 id={id}
@@ -53,12 +56,7 @@ console.log(course);
                 //refetch={refetch}
               />
             </div>
-            {/* <div className="hidden 800px:block 800px:col-span-3">
-          <CourseContentList
-          setActiveVideo={setActiveVideo}
-          data={data.content}
-          activeVideo={activeVideo}/>
-        </div> */}
+            
           </div>
         <Footer/>
         </>
