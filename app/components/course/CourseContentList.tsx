@@ -1,21 +1,44 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { MdOutlineOndemandVideo } from "react-icons/md";
+import { RiPlayList2Fill } from "react-icons/ri";
 
 type Props = {
   data: any;
- /*  activeVideo?: number;
-  setActiveVideo?: any; */
+  activeVideo?: number;
+  setActiveVideo?: any;
   isDemo?: boolean;
 };
 
 const CourseContentList: FC<Props> = ({
   data,
-  /* activeVideo,
-  setActiveVideo, */
+  activeVideo,
+  setActiveVideo,
   isDemo,
 }) => {
-  return <div className={`mt-[15px] w-full ${!isDemo && 'ml-[-30px] min-h-20vh sticky top-24 left-0 z-30'}`}>
+  
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(
+    new Set<string>()
+  );
+  console.log(visibleSections)
+
+  const videoSections:string[] = [
+    ...new Set<string>(data?.map((item: any) => item.videoSection)),
+  ];
+  console.log(videoSections);
+  let totalCount: number = 0;
+
+  const toggleSection = (section: string) => {
+    const newVisibleSections = new Set(visibleSections);
+    if (newVisibleSections.has(section)) {
+      newVisibleSections.delete(section);
+    } else {
+      newVisibleSections.add(section);
+    }
+    setVisibleSections(newVisibleSections);
+  };
+
+  return <div className={`mt-[15px] w-[60%] ${!isDemo && 'ml-[-30px] min-h-20vh sticky top-24 left-0 z-30'}`}>
   {videoSections.map((section: string, sectionIndex: number) => {
     console.log(section)
     const isSectionVisible = visibleSections.has(section);
@@ -31,14 +54,17 @@ const CourseContentList: FC<Props> = ({
 
       <div className="w-full flex">
         {/* Render video section */}
-        <div className="w-full flex justify-between items-center">
-          <h1 className="text-[22px] text-black dark:text-white">{section}</h1>
-          <button className='mr-4 cursor-pointer text-black dark:text-white'
+        <div className="w-full flex items-center justify-between">
+          <div className="flex items-center text-black dark:text-white">
+          <RiPlayList2Fill size={25} />
+          <h1 className="text-[22px] text-black dark:text-white font-Poppins ps-2 ">{section}</h1>
+          </div>
+          <button className='mr-4 cursor-pointer text-black dark:text-white '
             onClick={() => toggleSection(section)}>
             {isSectionVisible ? (<BsChevronUp size={20} />) : (<BsChevronDown size={20} />)}</button>
         </div>
       </div>
-      <h5 className="text-black dark:text-white">
+      <h5 className="text-black dark:text-white font-Poppins">
       {videoCount}  Lessons {' '} {sectionVideoLength < 60 ? sectionVideoLength : sectionCoutentHours.toFixed(2)}{' '}
         {sectionVideoLength < 60 ? 'Minutes' : 'Hours'}
       </h5>
@@ -54,12 +80,12 @@ const CourseContentList: FC<Props> = ({
                 <div className="flex items-center">
                   <MdOutlineOndemandVideo size={25}
                     className='mr-2' color='#1cdada' />
-                  <h1 className=" text-[18px] inline-block break-words text-black dark:text-white">
+                  <h1 className=" text-[18px] inline-block break-words text-black dark:text-white font-Poppins">
                     {item.title}
                   </h1>
                 </div>
 
-                <h5 className="text-[18px] pl-8 text-black dark:text-white">
+                <h5 className="text-[14px] pl-8 text-black dark:text-white">
                   {item.videoLength < 60 ? item.videoLength : contentLength.toFixed(2)}{' '}
                   {item.videoLength < 60 ? 'Minutes' : 'Hours'}
                 </h5>
