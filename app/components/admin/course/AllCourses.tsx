@@ -5,7 +5,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useTheme } from "next-themes";
 import toast from "react-hot-toast";
 import { AiFillEdit, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
-import { useDeleteCourseMutation, useGetAllCourseaQuery } from "@/redux/features/courses/coursesApi";
+import { useDeleteCourseMutation,useGetAllCoursesForUsersQuery } from "@/redux/features/courses/coursesApi";
 import { styles } from "@/app/styles/style";
 import {format} from 'timeago.js'
 import Link from "next/link";
@@ -16,7 +16,7 @@ const AllCourses = (props: Props) => {
   const { theme, setTheme } = useTheme();
   const [active, setActive] = useState(false);
   const [id, setId] = useState('');
-  const {isLoading,data,error,refetch} = useGetAllCourseaQuery({},{refetchOnMountOrArgChange:true})
+  const {isLoading,data,error,refetch} = useGetAllCoursesForUsersQuery({},{refetchOnMountOrArgChange:true})
   const [deleteCourse,{isSuccess}] = useDeleteCourseMutation({})
 
   const colums = [
