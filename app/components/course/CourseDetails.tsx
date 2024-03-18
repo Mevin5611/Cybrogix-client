@@ -2,13 +2,15 @@ import { styles } from "@/app/styles/style";
 import Ratings from "@/app/utils/Ratings";
 import Link from "next/link";
 import { format } from "path";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { IoCheckmarkDone, IoCloseOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import CourseContentList from "./CourseContentList";
 import CoursePlayer from "../admin/course/CoursePlayer";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckOutForm from '../payment/CheckOutForm'
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
+import { FaBedPulse } from "react-icons/fa6";
 
 type Props = {
   data: any;
@@ -26,15 +28,26 @@ const CourseDetails: FC<Props> = ({
 
 }) => {
   const [open,setOpen] = useState(false)
-  const { user } = useSelector((state: any) => state.auth);
+  const {data:user} = useLoadUserQuery(undefined,{})
+  const [isPurchsed,setIsPurchsed] = useState(FaBedPulse)
+  
 
   const discountPercentage =
     ((data?.estimatedPrice - data?.price) / data?.estimatedPrice) * 100;
 
   const discountPercentagePrice = discountPercentage.toFixed(0);
 
-  const isPurchsed =
-    user && user.courses.find((item: any) => item._id === id);
+  useEffect(() => {
+    if(user){
+      const purchased = user && user?.courses?.find((item: any) => item._id === id);
+      if(purchased){
+        setIsPurchsed(true)
+      }
+    }
+  }, [user])
+  
+
+  
 
     const handleBuy = ()=>{
       setOpen(true)
