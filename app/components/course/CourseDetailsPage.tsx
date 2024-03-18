@@ -4,9 +4,9 @@ import Loader from "../Loader/Loader";
 import Header from "../Header";
 import Heading from "@/app/utils/Heading";
 import CourseDetails from "./CourseDetails";
-import CourseContentList from "./CourseContentList";
 import Footer from "../Route/Footer";
-
+import { useCreatePaymentMutation, useSendStripeKeyQuery } from "@/redux/features/payment/paymentApi";
+import {loadStripe} from '@stripe/stripe-js'
 type Props = {
   id: string;
 };
@@ -16,10 +16,32 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
   const [route, setRoute] = useState("Login");
   const [course,setCourse] = useState()
   const { data, isLoading } = useGetCourseDetailsQuery(id);
+  const {data:config} = useSendStripeKeyQuery({})
+  const [stripePromise,setStripePromise] = useState<any>(null)
+  const [clientsecret,setClientSecret] = useState('')
+  const[createPayment,{data:paymentData}] = useCreatePaymentMutation()
 
   useEffect(() => {
-    setCourse(data?.course)
-  }, [data])
+    
+    if(config){
+      const publishablekey = config?.publishableKey;
+      setStripePromise(loadStripe(publishablekey))
+    }
+    if(data){
+      const amount = Math.round(data.course.price * 100)
+      createPayment(amount)
+      setCourse(data?.course)
+    }
+  }, [data,config])
+
+  useEffect(() => {
+    if(paymentData){
+      setClientSecret(paymentData?.clientSecret)
+    }
+  
+    
+  }, [paymentData])
+  
   
 console.log(course);
 
@@ -47,11 +69,17 @@ console.log(course);
             />
 
             <div className="col-span-10">
-              <CourseDetails
+              {
+                stripePromise && (
+                  <CourseDetails
                 data={course}
                 id={id}
+                stripePromise={stripePromise}
+                clientsecret={clientsecret}
                
               />
+                )
+              }
             </div>
             
           </div>
