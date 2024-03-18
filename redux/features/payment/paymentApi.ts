@@ -9,7 +9,7 @@ export const paymentApi = apiSlice.injectEndpoints({
                 credentials:"include" as const
             })
         }),
-        cretePayment:builder.query({
+        createPayment:builder.mutation({
             query:(amount)=>({
                 url:"payment",
                 method:"POST",
@@ -23,4 +23,4 @@ export const paymentApi = apiSlice.injectEndpoints({
 })
 
 
-export const {useCretePaymentQuery,useSendStripeKeyQuery} = paymentApi
+export const {useCreatePaymentMutation,useSendStripeKeyQuery} = paymentApi
