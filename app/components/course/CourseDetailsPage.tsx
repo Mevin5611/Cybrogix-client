@@ -18,13 +18,13 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
   const { data, isLoading } = useGetCourseDetailsQuery(id);
   const {data:config} = useSendStripeKeyQuery({})
   const [stripePromise,setStripePromise] = useState<any>(null)
-  const [clientsecret,setClientSecret] = useState('')
+  const [clientSecret,setClientSecret] = useState('')
   const[createPayment,{data:paymentData}] = useCreatePaymentMutation()
 
   useEffect(() => {
     
     if(config){
-      const publishablekey = config?.publishableKey;
+      const publishablekey = config?.publishablekey;
       setStripePromise(loadStripe(publishablekey))
     }
     if(data){
@@ -36,7 +36,9 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
 
   useEffect(() => {
     if(paymentData){
-      setClientSecret(paymentData?.clientSecret)
+      
+      
+      setClientSecret(paymentData?.client_secret)
     }
   
     
@@ -75,7 +77,7 @@ console.log(course);
                 data={course}
                 id={id}
                 stripePromise={stripePromise}
-                clientsecret={clientsecret}
+                clientSecret={clientSecret}
                
               />
                 )
