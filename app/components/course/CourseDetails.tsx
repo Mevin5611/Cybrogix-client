@@ -7,15 +7,22 @@ import { IoCheckmarkDone, IoCloseOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import CourseContentList from "./CourseContentList";
 import CoursePlayer from "../admin/course/CoursePlayer";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckOutForm from '../payment/CheckOutForm'
 
 type Props = {
   data: any;
   id: string;
+  stripePromise:any
+  clientSecret:string
+
 };
 
 const CourseDetails: FC<Props> = ({
   id,
   data,
+  clientSecret,
+  stripePromise
 
 }) => {
   const [open,setOpen] = useState(false)
@@ -27,7 +34,7 @@ const CourseDetails: FC<Props> = ({
   const discountPercentagePrice = discountPercentage.toFixed(0);
 
   const isPurchsed =
-    user && user.courses.find((item: any) => item._id === data._id);
+    user && user.courses.find((item: any) => item._id === id);
 
     const handleBuy = ()=>{
       setOpen(true)
@@ -186,7 +193,7 @@ const CourseDetails: FC<Props> = ({
               <div className="flex items-center">
                 {isPurchsed ? (
                   <Link
-                    href={`/course-access/${data._id}`}
+                    href={`/course-access/${id}`}
                     className={`${styles.button} !w-[180px] my-3 font-Poppins !bg-[crimson]`}
                   >
                     Enter to Course
@@ -225,10 +232,17 @@ const CourseDetails: FC<Props> = ({
               <div className="w-full flex justify-end">
                 <IoCloseOutline size={40} className='text-black cursor-pointer' onClick={() => setOpen(false)} />
               </div>
-              <div className="w-full">
-                <h1>dfgdfgdfgdfgdf</h1>
+              <div className="w-full p-5">
+                {
+                  stripePromise && clientSecret && (
+                    <Elements stripe={stripePromise} options={{clientSecret}} >
+                      <CheckOutForm setOpen={setOpen} data={data}/>
+                    </Elements>
+                  )
+                }
               </div>
             </div>
+            
           </div>
         )
       }
