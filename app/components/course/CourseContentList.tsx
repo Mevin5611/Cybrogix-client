@@ -38,7 +38,7 @@ const CourseContentList: FC<Props> = ({
     setVisibleSections(newVisibleSections);
   };
 
-  return <div className={`mt-[15px] w-[60%] ${!isDemo && 'ml-[-30px] min-h-20vh sticky top-24 left-0 z-30'}`}>
+  return <div className={`mt-[15px] w-[60%] ${!isDemo && 'ml-[-30px] min-h-20vh sticky top-24 left-0 z-30 w-full'}`}>
   {videoSections.map((section: string, sectionIndex: number) => {
     console.log(section)
     const isSectionVisible = visibleSections.has(section);
@@ -50,7 +50,7 @@ const CourseContentList: FC<Props> = ({
     const sectionStartIndex: number = totalCount; //start index of videos within the current section
     totalCount += videoCount; //increment the total count
     const sectionCoutentHours: number = sectionVideoLength / 60
-    return (<div key={sectionIndex} className={`w-full ${!isDemo && 'border-b border-[#ffffff8e] pb-2'}`}>
+    return (<div key={sectionIndex} className={`w-full ${!isDemo && 'border-b border-[#ffffff8e] pb-2 w-full'}`}>
 
       <div className="w-full flex">
         {/* Render video section */}
