@@ -1,44 +1,56 @@
-'use client'
-import Loader from '@/app/components/Loader/Loader'
-import { useLoadUserQuery } from '@/redux/features/api/apiSlice'
-import { redirect } from 'next/navigation'
-import React, { FC, useEffect } from 'react'
-import CourseContentMedia from '../../components/course/CourseContentMedia'
+"use client";
+import Loader from "@/app/components/Loader/Loader";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
+import { redirect } from "next/navigation";
+import React, { useState } from "react";
+import CourseContentMedia from "../../components/course/CourseContentMedia";
+import Header from "@/app/components/Header";
 type Props = {
-    params:any
-}
+  params: any;
+};
 
-const Page = ({params}: Props) => {
-    const id = params.id
-    const {isLoading,data,error} = useLoadUserQuery(undefined,{})
+const Page = ({ params }: Props) => {
+  const [open, setOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState(0);
+  const [route, setRoute] = useState("Login");
+  const id = params.id;
+  const { isLoading, data, error } = useLoadUserQuery(undefined, {});
 
-    useEffect(() => {
-     
-        const isPurchased = data?.user?.courses?.find((item:any)=> item._id === id)
+  if (data) {
+    const isPurchased = data?.user?.courses?.find(
+      (item: any) => item._id === id
+    );
 
-        if(!isPurchased){
-            redirect("/")
-        }
+    if (!isPurchased) {
+      redirect("/");
+    }
 
-        if(error){
-            redirect("/")
-        }
-     
-    }, [data,error])
-    
+    if (error) {
+      redirect("/");
+    }
+  }
+
   return (
     <>
-    {
-        isLoading ? (
-            <Loader />
-        ): (
-            <div>
-                <CourseContentMedia id={id} />
-            </div>
-        )
-    }
-    </>
-  )
-}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div>
+          <Header
+            open={open}
+            setOpen={setOpen}
+            activeItem={activeItem}
+            setRoute={setRoute}
+            route={route}
+          />
 
-export default Page
+          <div className="mt-10 ms-16">
+            <CourseContentMedia id={id} user={data.user} />
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Page;
