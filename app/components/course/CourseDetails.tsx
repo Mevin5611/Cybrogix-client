@@ -29,7 +29,8 @@ const CourseDetails: FC<Props> = ({
 }) => {
   const [open,setOpen] = useState(false)
   const {data:user} = useLoadUserQuery(undefined,{})
-  const [isPurchsed,setIsPurchsed] = useState(FaBedPulse)
+  const [userdata,setUserdata] = useState()
+
   
 
   const discountPercentage =
@@ -37,18 +38,21 @@ const CourseDetails: FC<Props> = ({
 
   const discountPercentagePrice = discountPercentage.toFixed(0);
 
-  useEffect(() => {
-    if(user){
-      const purchased = user && user?.courses?.find((item: any) => item._id === id);
-      if(purchased){
-        setIsPurchsed(true)
-      }
-    }
-  }, [user])
-  
 
-  
+      
 
+    useEffect(() => {
+     if(user){
+      console.log("user");
+      
+      setUserdata(user)
+     }
+    }, [user])
+    
+    
+    const isPurchased = userdata && userdata?.user?.courses.find((item:any)=> item._id === id)
+  console.log(isPurchased);
+  
     const handleBuy = ()=>{
       setOpen(true)
     }
@@ -204,7 +208,7 @@ const CourseDetails: FC<Props> = ({
                 </h2>
               </div>
               <div className="flex items-center">
-                {isPurchsed ? (
+                {isPurchased ? (
                   <Link
                     href={`/course-access/${id}`}
                     className={`${styles.button} !w-[180px] my-3 font-Poppins !bg-[crimson]`}
