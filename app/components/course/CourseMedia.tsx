@@ -12,6 +12,12 @@ import Avatar from "../../../public/assets/image/avatar.png";
 import { format } from "timeago.js";
 import { BiMessage } from "react-icons/bi";
 import Ratings from "@/app/utils/Ratings";
+import {
+  useAddNewQuestionMutation,
+  useAddQuestionReplayMutation,
+  useGetCourseDetailsQuery,
+} from "@/redux/features/courses/coursesApi";
+import toast from "react-hot-toast";
 
 type Props = {
   data: any;
@@ -19,6 +25,7 @@ type Props = {
   activeVideo: number;
   setActiveVideo: (activevideo: number) => void;
   userData: any;
+  refetch: any;
 };
 
 const CourseMedia = ({
@@ -27,6 +34,7 @@ const CourseMedia = ({
   activeVideo,
   setActiveVideo,
   userData,
+  refetch,
 }: Props) => {
   console.log(data);
   console.log(userData);
@@ -38,6 +46,80 @@ const CourseMedia = ({
   const [review, setReview] = useState("");
   const [reviewReplyId, setReviewReplyId] = useState("");
   const [FX, setFX] = useState("");
+  const { data: courseData, isLoading } = useGetCourseDetailsQuery(id);
+  const [addNewQuestion, { isSuccess, error, isLoading: questionLoading }] =
+    useAddNewQuestionMutation();
+  const [
+    addQuestionReplay,
+    { isSuccess: answerSuccess, isLoading: anserLOading, error: anwerError },
+  ] = useAddQuestionReplayMutation();
+
+  console.log(courseData);
+
+  const isReviewExist = courseData?.course?.reviews.find(
+    (item: any) => item.user._id === userData._id
+  );
+  const handelCommentSubmit = () => {
+    if (question.length === 0) {
+      toast.error("question can't be empty");
+    } else {
+      addNewQuestion({
+        question,
+        courseId: id,
+        contentId: data.content[activeVideo]._id,
+      });
+    }
+  };
+  const handelAnswerSubmit = (questionId: any) => {
+    if (answer.length === 0) {
+      toast.error("answer can't be empty");
+    } else {
+
+      const currentAnswer = answer[questionId];
+    if (currentAnswer && currentAnswer.trim() !== ""){
+
+      addQuestionReplay({
+        answer:currentAnswer,
+        courseId: id,
+        contentId: data.content[activeVideo]._id,
+        questionId,
+      })
+    }
+      
+    }
+  };
+  const handleAnswerChange = (questionId: string, value: string) => {
+    setAnswer((prevAnswer:any) => ({
+      ...prevAnswer,
+      [questionId]: value
+    }));
+  };
+
+
+  useEffect(() => {
+    if (isSuccess) {
+      setQuestion("");
+      refetch();
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorMsg = error as any;
+        toast.error(errorMsg.data.message);
+      }
+    }
+    if (answerSuccess) {
+      setAnswer('')
+      refetch();
+    }
+    if (anwerError) {
+      if ("data" in anwerError) {
+        const errorMsg = anwerError as any;
+        toast.error(errorMsg.data.message);
+      }
+    }
+  }, [isSuccess, error,answerSuccess,anwerError]);
+
+  
 
   return (
     <div className="w-[95%] 800px:w-[86%]  min-h-screen">
@@ -141,10 +223,13 @@ const CourseMedia = ({
           </div>
           <div className="w-full flex justify-end">
             <div
-              className={`${styles.button} !w-[120px] !h-[40px] text-[18px] mt-5 `}
-              aria-disabled={
-                question === ""
-              } /* onClick={() => handelCommentSubmit()} */
+              className={`${
+                styles.button
+              } !w-[120px] !h-[40px] text-[18px] mt-5 ${
+                questionLoading && "cursor-not-allowed"
+              } `}
+              aria-disabled={question === ""}
+              onClick={questionLoading ? () => {} : handelCommentSubmit}
             >
               Submit
             </div>
@@ -158,9 +243,9 @@ const CourseMedia = ({
                 data={data}
                 activeVideo={activeVideo}
                 answer={answer}
-                /*  handelAnswerSubmit={handelAnswerSubmit} */
+                handelAnswerSubmit={handelAnswerSubmit}
+                handleAnswerChange={handleAnswerChange}
                 user={userData.user}
-                setAnswer={setAnswer}
                 setQuestionId={setQuestionId}
               />
             </div>
@@ -169,68 +254,70 @@ const CourseMedia = ({
       )}
       {activeBar === 3 && (
         <div className="w-full">
-          {/*  {userRatingsIsExist ? (
-                                        <h1 className='text-black dark:text-white w-full text-center font-Poppins text-[20px]'>Your rating has been submitted</h1>
-                                    ) : ( */}
-          <div className="flex w-full">
-            <Image
-              src={
-                userData && userData?.user?.avatar
-                  ? userData?.user?.avatar?.url
-                  : Avatar
-              }
-              alt="img not found"
-              height={100}
-              width={100}
-              className="h-[50px] w-[50px] rounded-full object-cover"
-            />
-            <div className="w-full">
-              <h1 className="pl-3 text-[20px] font-[500] dark:text-white text-black">
-                {" "}
-                Give a Rating <span className="text-red-600">*</span>
-              </h1>
+          {isReviewExist ? (
+            <h1 className="text-black dark:text-white w-full text-center font-Poppins text-[20px]">
+              Your rating has been submitted
+            </h1>
+          ) : (
+            <div className="flex w-full">
+              <Image
+                src={
+                  userData && userData?.user?.avatar
+                    ? userData?.user?.avatar?.url
+                    : Avatar
+                }
+                alt="img not found"
+                height={100}
+                width={100}
+                className="h-[50px] w-[50px] rounded-full object-cover"
+              />
+              <div className="w-full">
+                <h1 className="pl-3 text-[20px] font-[500] dark:text-white text-black">
+                  {" "}
+                  Give a Rating <span className="text-red-600">*</span>
+                </h1>
 
-              <div className="flex w-full ml-2 pb-3">
-                {[1, 2, 3, 4, 5].map((i) =>
-                  rating >= i ? (
-                    <AiFillStar
-                      key={i}
-                      className="mr-1 cursor-pointer"
-                      color="rgb(246,186,0)"
-                      size={25}
-                      onClick={() => setRating(i)}
-                    />
-                  ) : (
-                    <AiOutlineStar
-                      key={i}
-                      className="mr-1 cursor-pointer"
-                      color="rgb(246,186,0)"
-                      size={25}
-                      onClick={() => setRating(i)}
-                    />
-                  )
-                )}
-              </div>
-              <textarea
-                name=""
-                id=""
-                cols={30}
-                rows={5}
-                value={review}
-                onChange={(e) => setReview(e.target.value)}
-                className="outline-none bg-transparent  border border-[#ffffff57] dark:border-[#ffffff57] 800px:w-full p-2 rounded  w-[90%] 800px:text-[18px] font-Poppins"
-                placeholder="Write your comment here..."
-              ></textarea>
-              <div className="w-full flex justify-end">
-                <div
-                  /* onClick={handelReviewsSubmit} */ className={`${styles.button}  !w-[120px] !h-[40px] text-[18px] mt-5`}
-                >
-                  Submit
+                <div className="flex w-full ml-2 pb-3">
+                  {[1, 2, 3, 4, 5].map((i) =>
+                    rating >= i ? (
+                      <AiFillStar
+                        key={i}
+                        className="mr-1 cursor-pointer"
+                        color="rgb(246,186,0)"
+                        size={25}
+                        onClick={() => setRating(i)}
+                      />
+                    ) : (
+                      <AiOutlineStar
+                        key={i}
+                        className="mr-1 cursor-pointer"
+                        color="rgb(246,186,0)"
+                        size={25}
+                        onClick={() => setRating(i)}
+                      />
+                    )
+                  )}
+                </div>
+                <textarea
+                  name=""
+                  id=""
+                  cols={30}
+                  rows={5}
+                  value={review}
+                  onChange={(e) => setReview(e.target.value)}
+                  className="outline-none bg-transparent  border border-[#ffffff57] dark:border-[#ffffff57] 800px:w-full p-2 rounded  w-[90%] 800px:text-[18px] font-Poppins"
+                  placeholder="Write your comment here..."
+                ></textarea>
+                <div className="w-full flex justify-end">
+                  <div
+                    /* onClick={handelReviewsSubmit} */ className={`${styles.button}  !w-[120px] !h-[40px] text-[18px] mt-5`}
+                  >
+                    Submit
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          {/*  )} */}
+          )}
 
           {/* {
                                         userRatings.map((item: any, index: number) => (
@@ -346,8 +433,8 @@ const CommentReply = ({
   setQuestionId,
   activeVideo,
   data,
-  setAnswer,
   handelAnswerSubmit,
+  handleAnswerChange
 }: any) => {
   return (
     <>
@@ -357,10 +444,10 @@ const CommentReply = ({
             <CommentItem
               key={index}
               item={item}
-              answer={answer}
+              answer={answer[item._id] || ''}
               setQuestionId={setQuestionId}
-              setAnswer={setAnswer}
-              /* handelAnswerSubmit={handelAnswerSubmit} */
+              handelAnswerSubmit={() => handelAnswerSubmit(item._id)}
+              handleAnswerChange={(value: string) => handleAnswerChange(item._id, value)}
               activeVideo={activeVideo}
               data={data}
             />
@@ -376,8 +463,9 @@ const CommentItem = ({
   setQuestionId,
   activeVideo,
   data,
-  setAnswer,
-  /* handelAnswerSubmit, */ item,
+  handelAnswerSubmit,
+  handleAnswerChange,
+  item,
 }: any) => {
   const [replyActive, setReplyActive] = useState(false);
 
@@ -461,13 +549,14 @@ const CommentItem = ({
                 type="text"
                 placeholder="Enter your reply..."
                 value={answer}
-                onChange={(e) => setAnswer(e.target.value)}
+                onChange={(e: any) => handleAnswerChange(e.target.value)}
                 className="block 800px:ml-12 mt-2 outline-none bg-transparent border-b border-[#00000027] dark:border-white  text-black dark:text-white w-[90%]"
               />
               <button
                 type="submit"
                 className="absolute right-10 bottom-1  text-black dark:text-white"
-                /* onClick={handelAnswerSubmit} */ disabled={answer === ""}
+                onClick={handelAnswerSubmit}
+                disabled={!answer.trim()}
               >
                 Submit
               </button>
