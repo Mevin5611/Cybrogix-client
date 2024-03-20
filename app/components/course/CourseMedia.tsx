@@ -18,6 +18,8 @@ import {
   useGetCourseDetailsQuery,
 } from "@/redux/features/courses/coursesApi";
 import toast from "react-hot-toast";
+import { MdVerified } from "react-icons/md";
+import { IoSendSharp } from "react-icons/io5";
 
 type Props = {
   data: any;
@@ -74,27 +76,23 @@ const CourseMedia = ({
     if (answer.length === 0) {
       toast.error("answer can't be empty");
     } else {
-
       const currentAnswer = answer[questionId];
-    if (currentAnswer && currentAnswer.trim() !== ""){
-
-      addQuestionReplay({
-        answer:currentAnswer,
-        courseId: id,
-        contentId: data.content[activeVideo]._id,
-        questionId,
-      })
-    }
-      
+      if (currentAnswer && currentAnswer.trim() !== "") {
+        addQuestionReplay({
+          answer: currentAnswer,
+          courseId: id,
+          contentId: data.content[activeVideo]._id,
+          questionId,
+        });
+      }
     }
   };
   const handleAnswerChange = (questionId: string, value: string) => {
-    setAnswer((prevAnswer:any) => ({
+    setAnswer((prevAnswer: any) => ({
       ...prevAnswer,
-      [questionId]: value
+      [questionId]: value,
     }));
   };
-
 
   useEffect(() => {
     if (isSuccess) {
@@ -108,7 +106,7 @@ const CourseMedia = ({
       }
     }
     if (answerSuccess) {
-      setAnswer('')
+      setAnswer("");
       refetch();
     }
     if (anwerError) {
@@ -117,9 +115,7 @@ const CourseMedia = ({
         toast.error(errorMsg.data.message);
       }
     }
-  }, [isSuccess, error,answerSuccess,anwerError]);
-
-  
+  }, [isSuccess, error, answerSuccess, anwerError]);
 
   return (
     <div className="w-[95%] 800px:w-[86%]  min-h-screen">
@@ -434,7 +430,7 @@ const CommentReply = ({
   activeVideo,
   data,
   handelAnswerSubmit,
-  handleAnswerChange
+  handleAnswerChange,
 }: any) => {
   return (
     <>
@@ -444,10 +440,12 @@ const CommentReply = ({
             <CommentItem
               key={index}
               item={item}
-              answer={answer[item._id] || ''}
+              answer={answer[item._id] || ""}
               setQuestionId={setQuestionId}
               handelAnswerSubmit={() => handelAnswerSubmit(item._id)}
-              handleAnswerChange={(value: string) => handleAnswerChange(item._id, value)}
+              handleAnswerChange={(value: string) =>
+                handleAnswerChange(item._id, value)
+              }
               activeVideo={activeVideo}
               data={data}
             />
@@ -468,6 +466,7 @@ const CommentItem = ({
   item,
 }: any) => {
   const [replyActive, setReplyActive] = useState(false);
+  console.log("item", item);
 
   return (
     <>
@@ -480,10 +479,20 @@ const CommentItem = ({
             width={100}
             className="h-[50px] w-[50px] rounded-full object-cover"
           />
-          <div className="pl-3">
-            <h1 className="text-[20px]  text-black dark:text-white ">
-              {item?.user?.name}
-            </h1>
+
+          <div className="pl-3 ">
+            <div className="flex items-center">
+              <div>
+                <h1 className="text-[20px]  text-black dark:text-white ">
+                  {item?.user?.name}
+                </h1>
+              </div>
+              {item.user && item.user.role === "admin" && (
+                <div className="ps-2">
+                  <MdVerified className="text-[20px] text-[#0084ff]" />
+                </div>
+              )}
+            </div>
             <p className="text-black dark:text-white">{item.question}</p>
             <small className=" text-black dark:text-white">
               {" "}
@@ -532,9 +541,18 @@ const CommentItem = ({
                   />
                 </div>
                 <div className="pl-3">
-                  <h1 className="text-[20px]  text-black dark:text-white ">
-                    {reply?.user?.name}
-                  </h1>
+                  <div className="flex items-center">
+                    <div>
+                      <h1 className="text-[20px]  text-black dark:text-white ">
+                        {item?.user?.name}
+                      </h1>
+                    </div>
+                    {item.user && item.user.role === "admin" && (
+                      <div className="ps-2">
+                        <MdVerified className="text-[20px] text-[#0084ff]" />
+                      </div>
+                    )}
+                  </div>
                   <p className="text-black dark:text-white">{reply.answer}</p>
                   <small className="text-[#ffffff83] text-black dark:text-white">
                     {" "}
@@ -558,7 +576,8 @@ const CommentItem = ({
                 onClick={handelAnswerSubmit}
                 disabled={!answer.trim()}
               >
-                Submit
+                <IoSendSharp size={25} />
+                
               </button>
             </div>
             <br />
