@@ -15,6 +15,8 @@ import Ratings from "@/app/utils/Ratings";
 import {
   useAddNewQuestionMutation,
   useAddQuestionReplayMutation,
+  useAddReviewMutation,
+  useAddReviewReplayMutation,
   useGetCourseDetailsQuery,
 } from "@/redux/features/courses/coursesApi";
 import toast from "react-hot-toast";
@@ -38,8 +40,8 @@ const CourseMedia = ({
   userData,
   refetch,
 }: Props) => {
-  console.log(data);
-  console.log(userData);
+  console.log("data", data);
+  console.log("user", userData);
   const [activeBar, setActiveBar] = useState(0);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
@@ -48,19 +50,26 @@ const CourseMedia = ({
   const [review, setReview] = useState("");
   const [reviewReplyId, setReviewReplyId] = useState("");
   const [FX, setFX] = useState("");
-  const { data: courseData, isLoading } = useGetCourseDetailsQuery(id);
+  const { data: courseData, isLoading,refetch:courseFetch } = useGetCourseDetailsQuery(id,{refetchOnMountOrArgChange:true});
   const [addNewQuestion, { isSuccess, error, isLoading: questionLoading }] =
     useAddNewQuestionMutation();
   const [
     addQuestionReplay,
-    { isSuccess: answerSuccess, isLoading: anserLOading, error: anwerError },
+    { isSuccess: answerSuccess, isLoading: answerLoading, error: anwerError },
   ] = useAddQuestionReplayMutation();
+  const [addReview, { isSuccess: reviewSuccess, error: reviewError }] =
+    useAddReviewMutation();
 
-  console.log(courseData);
+  const [addReviewReplay, { isSuccess: rerplySuccess, error: revrplyError }] =
+    useAddReviewReplayMutation();
+
+  console.log("courses", courseData);
 
   const isReviewExist = courseData?.course?.reviews.find(
     (item: any) => item.user._id === userData._id
   );
+  const userRatings = courseData && [...courseData?.course?.reviews].reverse();
+
   const handelCommentSubmit = () => {
     if (question.length === 0) {
       toast.error("question can't be empty");
@@ -94,6 +103,24 @@ const CourseMedia = ({
     }));
   };
 
+  const handelReviewsSubmit = () => {
+    if (review.length === 0) {
+      toast.error("comment can't be empty");
+    } else {
+      addReview({ review, rating, id });
+    }
+  };
+
+  const handelReplyReviewSubmit = () => {
+    if (FX.length === 0) {
+      toast.error("comment Replay can't be empty");
+    } else {
+      /* console.log({comment:FX,courseId:id,reviewId:reviewReplyId}); */
+
+      addReviewReplay({ comment: FX, courseId: id, reviewId: reviewReplyId });
+    }
+  };
+
   useEffect(() => {
     if (isSuccess) {
       setQuestion("");
@@ -115,7 +142,36 @@ const CourseMedia = ({
         toast.error(errorMsg.data.message);
       }
     }
-  }, [isSuccess, error, answerSuccess, anwerError]);
+    if (reviewSuccess) {
+      setReview("");
+      refetch();
+    }
+    if (reviewError) {
+      if ("data" in reviewError) {
+        const errorMsg = reviewError as any;
+        toast.error(errorMsg.data.message);
+      }
+    }
+    if (rerplySuccess) {
+      setFX("");
+      courseFetch();
+    }
+    if (revrplyError) {
+      if ("data" in revrplyError) {
+        const errorMsg = revrplyError as any;
+        toast.error(errorMsg.data.message);
+      }
+    }
+  }, [
+    isSuccess,
+    error,
+    answerSuccess,
+    anwerError,
+    reviewSuccess,
+    reviewError,
+    revrplyError,
+    rerplySuccess,
+  ]);
 
   return (
     <div className="w-[95%] 800px:w-[86%]  min-h-screen">
@@ -258,9 +314,7 @@ const CourseMedia = ({
             <div className="flex w-full">
               <Image
                 src={
-                  userData && userData?.user?.avatar
-                    ? userData?.user?.avatar?.url
-                    : Avatar
+                  userData && userData?.avatar ? userData?.avatar?.url : Avatar
                 }
                 alt="img not found"
                 height={100}
@@ -306,7 +360,8 @@ const CourseMedia = ({
                 ></textarea>
                 <div className="w-full flex justify-end">
                   <div
-                    /* onClick={handelReviewsSubmit} */ className={`${styles.button}  !w-[120px] !h-[40px] text-[18px] mt-5`}
+                    onClick={handelReviewsSubmit}
+                    className={`${styles.button}  !w-[120px] !h-[40px] text-[18px] mt-5`}
                   >
                     Submit
                   </div>
@@ -315,13 +370,17 @@ const CourseMedia = ({
             </div>
           )}
 
-          {/* {
-                                        userRatings.map((item: any, index: number) => (
-                                            <Review key={index} item={item} index={index} setReviewReplyId={setReviewReplyId} handelReplyReviewSubmit={handelReplyReviewSubmit}
-                                                setFX={setFX}
-                                                FX={FX} />
-                                        ))
-                                    } */}
+          {userRatings.map((item: any, index: number) => (
+            <Review
+              key={index}
+              item={item}
+              index={index}
+              setReviewReplyId={setReviewReplyId}
+              handelReplyReviewSubmit={handelReplyReviewSubmit}
+              setFX={setFX}
+              FX={FX}
+            />
+          ))}
         </div>
       )}
     </div>
@@ -333,14 +392,15 @@ const Review = ({
   index,
   setReviewReplyId,
   FX,
-  setFX /* handelReplyReviewSubmit */,
+  setFX,
+  handelReplyReviewSubmit,
 }: any) => {
   const [replyRatingOf, serReplyRatingOf] = useState(false);
-  const [RelyReview, setReplyReview] = useState();
+  const [ReplyReview, setReplyReview] = useState();
 
   useEffect(() => {
-    setFX(RelyReview);
-  }, [RelyReview]);
+    setFX(ReplyReview);
+  }, [ReplyReview]);
 
   return (
     <div className="w-full" key={index}>
@@ -354,9 +414,18 @@ const Review = ({
         />
 
         <div className="w-full">
-          <h1 className="800px:text-[20px] text-black dark:text-white">
-            {item?.user?.name}
-          </h1>
+          <div className="flex items-center">
+            <div>
+              <h1 className="text-[20px]  text-black dark:text-white ">
+                {item?.user?.name}
+              </h1>
+            </div>
+            {item.user && item.user.role === "admin" && (
+              <div className="ps-2">
+                <MdVerified className="text-[20px] text-[#0084ff]" />
+              </div>
+            )}
+          </div>
 
           <Ratings rating={item.rating} />
           <p className="800px:text-[15px] text-black dark:text-white">
@@ -366,22 +435,24 @@ const Review = ({
             {" "}
             {format(item.createdAt ? item.createdAt : " 0 day")}
           </small>
-          <p
-            onClick={() => {
-              serReplyRatingOf(!replyRatingOf);
-              setReviewReplyId(item._id);
-            }}
-            className="800px:text-[15px] w-min cursor-pointer text-black dark:text-white"
-          >
-            {replyRatingOf ? "Hide" : "Reply"}
-          </p>
+          {item.user && item.user.role === "admin" && (
+            <p
+              onClick={() => {
+                serReplyRatingOf(!replyRatingOf);
+                setReviewReplyId(item._id);
+              }}
+              className="800px:text-[15px] w-min cursor-pointer text-black dark:text-white"
+            >
+              {replyRatingOf ? "Hide" : "Reply"}
+            </p>
+          )}
         </div>
       </div>
       <br />
 
       {replyRatingOf && (
         <>
-          {item.commentReplies.map((reply: any, index: number) => (
+          {item?.commentReplies.map((reply: any, index: number) => (
             <div key={index} className="flex gap-x-2 ml-10 mt-5 ">
               <Image
                 src={reply ? reply.user.avatar.url : Avatar}
@@ -392,9 +463,18 @@ const Review = ({
               />
 
               <div>
-                <h1 className="  text-black dark:text-[#c9f06f] font-Poppins">
-                  {reply.user.name}
-                </h1>
+              <div className="flex items-center">
+            <div>
+              <h1 className="text-[20px]  text-black dark:text-white ">
+                {reply?.user?.name}
+              </h1>
+            </div>
+            {reply.user && reply.user.role === "admin" && (
+              <div className="ps-2">
+                <MdVerified className="text-[20px] text-[#0084ff]" />
+              </div>
+            )}
+          </div>
                 <p className=" text-[17px] text-black dark:text-white font-Poppins">
                   {reply.comment}
                 </p>
@@ -406,15 +486,16 @@ const Review = ({
             <input
               type="text"
               placeholder="Enter your reply..."
-              value={RelyReview}
+              value={ReplyReview}
               onChange={(e: any) => setReplyReview(e.target.value)}
               className="block 800px:ml-12 mt-2 outline-none bg-transparent border-b border-[#00000027] dark:border-white  text-black dark:text-white w-[90%]"
             />
             <button
               type="submit"
-              className="absolute right-20 bottom-1  text-black dark:text-white" /* onClick={handelReplyReviewSubmit} */
+              className="absolute right-10 bottom-1  text-black dark:text-white"
+              onClick={handelReplyReviewSubmit}
             >
-              Submit
+              <IoSendSharp size={25} />
             </button>
           </div>
         </>
@@ -544,10 +625,10 @@ const CommentItem = ({
                   <div className="flex items-center">
                     <div>
                       <h1 className="text-[20px]  text-black dark:text-white ">
-                        {item?.user?.name}
+                        {reply?.user?.name}
                       </h1>
                     </div>
-                    {item.user && item.user.role === "admin" && (
+                    {reply.user && reply.user.role === "admin" && (
                       <div className="ps-2">
                         <MdVerified className="text-[20px] text-[#0084ff]" />
                       </div>
@@ -577,7 +658,6 @@ const CommentItem = ({
                 disabled={!answer.trim()}
               >
                 <IoSendSharp size={25} />
-                
               </button>
             </div>
             <br />
