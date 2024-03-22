@@ -7,18 +7,31 @@ import img1 from "../../../public/assets/image/images (1).jpg";
 import img2 from "../../../public/assets/image/images (2).jpg";
 import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 import Loader from "../Loader/Loader";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
 const Hero: FC<Props> = ({}) => {
-  const [bannerData, setBannerData] = useState();
+  const [bannerData, setBannerData] = useState<any>();
+  const [search, setSearch] = useState('');
   const { data,isLoading } = useGetHeroDataQuery("Banner", {});
+  const router=useRouter()
+  
   useEffect(() => {
     if (data) {
       setBannerData(data);
     }
   }, [data]);
-
+const handlesearch = () =>{
+  if(search.length===0){
+     
+    toast.error('Please enter a course name')
+  }else{
+    router.push(`/filteredcourses?title=${search}`)
+  }
+  
+}
 
   return (
     <>
@@ -54,9 +67,11 @@ const Hero: FC<Props> = ({}) => {
           <input
             type="text"
             placeholder="Search you course..."
+            value={search}
+            onChange={(e)=> setSearch(e.target.value)}
             className="w-full p-1 ps-2 appearance-none outline-none border border-[#a7a7a8] dark:border-[#232329] dark:text-white text-black rounded-sm focus:border-blue-700 "
           />
-          <button className="bg-[#39c1f3] rounded-r-[5px] p-1">
+          <button className="bg-[#39c1f3] rounded-r-[5px] p-1" onClick={handlesearch}>
             <BiSearch size={24} className="dark:text-black text-white" />
           </button>
         </div>
