@@ -6,12 +6,13 @@ import img from "../../../public/assets/image/images.jpg";
 import img1 from "../../../public/assets/image/images (1).jpg";
 import img2 from "../../../public/assets/image/images (2).jpg";
 import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
+import Loader from "../Loader/Loader";
 
 type Props = {};
 
 const Hero: FC<Props> = ({}) => {
   const [bannerData, setBannerData] = useState();
-  const { data } = useGetHeroDataQuery("Banner", {});
+  const { data,isLoading } = useGetHeroDataQuery("Banner", {});
   useEffect(() => {
     if (data) {
       setBannerData(data);
@@ -20,7 +21,12 @@ const Hero: FC<Props> = ({}) => {
 
 
   return (
-    <div className="w-full min-h-screen p-5 gap-x-10 1000px:flex items-center dark:bg-[#000000] bg-white">
+    <>
+    {
+      isLoading ? (
+        <Loader/>
+      ) : (
+        <div className="w-full min-h-screen p-5 gap-x-10 1000px:flex items-center dark:bg-[#000000] bg-white">
       <div className="w-[50%]">
         <div className=" w-[40vh] h-[40vh] 300px:w-[40vh] 300px:h-[40vh] 400px:w-[50vh]  400px:h-[50vh] 800px:h-[80vh] 800px:w-[80vh] hero_animation rounded-full ml-10 flex justify-center items-center">
           <div className="z-[10] ">
@@ -84,6 +90,9 @@ const Hero: FC<Props> = ({}) => {
         </div>
       </div>
     </div>
+      )
+    }
+    </>
   );
 };
 
