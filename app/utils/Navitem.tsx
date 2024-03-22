@@ -12,8 +12,8 @@ export const navItemData = [
     url: "/home",
   },
   {
-    name: "Course",
-    url: "/course",
+    name: "Category",
+    url: "/filteredcourses",
   },
   {
     name: "About",
