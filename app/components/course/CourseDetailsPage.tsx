@@ -20,6 +20,8 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
   const [stripePromise,setStripePromise] = useState<any>(null)
   const [clientSecret,setClientSecret] = useState('')
   const[createPayment,{data:paymentData}] = useCreatePaymentMutation()
+  /* console.log(data); */
+  
 
   useEffect(() => {
     
@@ -45,7 +47,7 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
   }, [paymentData])
   
   
-console.log(course);
+/* console.log(course); */
 
   return (
     <>
@@ -76,6 +78,7 @@ console.log(course);
                   <CourseDetails
                 data={course}
                 id={id}
+                setRoute={setRoute}
                 stripePromise={stripePromise}
                 clientSecret={clientSecret}
                

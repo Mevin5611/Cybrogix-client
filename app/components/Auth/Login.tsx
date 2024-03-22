@@ -40,6 +40,7 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
     if (isSuccess) {
       toast.success(" Login Successfully");
       setOpen(false);
+ 
     }
 
     if (error) {

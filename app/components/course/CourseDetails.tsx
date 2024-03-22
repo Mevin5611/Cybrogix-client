@@ -20,6 +20,8 @@ type Props = {
   id: string;
   stripePromise: any;
   clientSecret: string;
+  setRoute:any
+  setOpen:any
 };
 
 const CourseDetails: FC<Props> = ({
@@ -27,31 +29,47 @@ const CourseDetails: FC<Props> = ({
   data,
   clientSecret,
   stripePromise,
+  setRoute,
+  setOpen:openAuthModal
 }) => {
   const [open, setOpen] = useState(false);
+  const [purchased,setPurchased] = useState(false);
   const { data: user } = useLoadUserQuery(undefined, {});
-  const [userdata, setUserdata] = useState();
+
+  const [userdata, setUserdata] = useState<any>();
   const [replyRatingOf, serReplyRatingOf] = useState(false);
 
-  console.log(data);
+  useEffect(() => {
+    const isPurchased = user && user?.user?.courses.find((item: any) => item._id === data._id);
+    if(isPurchased){
+      console.log("true");
+      
+      setPurchased(true)
+    }
+}, [user]);
 
   const discountPercentage =
     ((data?.estimatedPrice - data?.price) / data?.estimatedPrice) * 100;
 
   const discountPercentagePrice = discountPercentage.toFixed(0);
 
-  useEffect(() => {
-    if (user) {
-      setUserdata(user);
-    }
-  }, [user]);
 
-  const isPurchased =
-    userdata && userdata?.user?.courses.find((item: any) => item._id === id);
-  console.log(isPurchased);
+ 
+
+
+
+
+
+
 
   const handleBuy = () => {
-    setOpen(true);
+    if(userdata){
+      setOpen(true);
+    }else{
+      toast.error("Please Login to Buy the course")
+      setRoute("Login")
+      openAuthModal(true)
+    }
   };
 
   return (
@@ -263,7 +281,7 @@ const CourseDetails: FC<Props> = ({
                 </h2>
               </div>
               <div className="flex items-center">
-                {isPurchased ? (
+                {purchased ? (
                   <Link
                     href={`/course-access/${id}`}
                     className={`${styles.button} !w-[180px] my-3 font-Poppins !bg-[crimson]`}
