@@ -50,7 +50,11 @@ const CourseMedia = ({
   const [review, setReview] = useState("");
   const [reviewReplyId, setReviewReplyId] = useState("");
   const [FX, setFX] = useState("");
-  const { data: courseData, isLoading,refetch:courseFetch } = useGetCourseDetailsQuery(id,{refetchOnMountOrArgChange:true});
+  const {
+    data: courseData,
+    isLoading,
+    refetch: courseFetch,
+  } = useGetCourseDetailsQuery(id, { refetchOnMountOrArgChange: true });
   const [addNewQuestion, { isSuccess, error, isLoading: questionLoading }] =
     useAddNewQuestionMutation();
   const [
@@ -463,18 +467,18 @@ const Review = ({
               />
 
               <div>
-              <div className="flex items-center">
-            <div>
-              <h1 className="text-[20px]  text-black dark:text-white ">
-                {reply?.user?.name}
-              </h1>
-            </div>
-            {reply.user && reply.user.role === "admin" && (
-              <div className="ps-2">
-                <MdVerified className="text-[20px] text-[#0084ff]" />
-              </div>
-            )}
-          </div>
+                <div className="flex items-center">
+                  <div>
+                    <h1 className="text-[20px]  text-black dark:text-white ">
+                      {reply?.user?.name}
+                    </h1>
+                  </div>
+                  {reply.user && reply.user.role === "admin" && (
+                    <div className="ps-2">
+                      <MdVerified className="text-[20px] text-[#0084ff]" />
+                    </div>
+                  )}
+                </div>
                 <p className=" text-[17px] text-black dark:text-white font-Poppins">
                   {reply.comment}
                 </p>
