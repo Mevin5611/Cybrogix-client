@@ -1,61 +1,58 @@
 import { styles } from "@/app/styles/style";
 import Ratings from "@/app/utils/Ratings";
 import Link from "next/link";
-import { format } from "path";
+import { format } from "timeago.js";
 import React, { FC, useEffect, useState } from "react";
 import { IoCheckmarkDone, IoCloseOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import CourseContentList from "./CourseContentList";
 import CoursePlayer from "../admin/course/CoursePlayer";
 import { Elements } from "@stripe/react-stripe-js";
-import CheckOutForm from '../payment/CheckOutForm'
+import CheckOutForm from "../payment/CheckOutForm";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import { FaBedPulse } from "react-icons/fa6";
+import Image from "next/image";
+import Avatar from "../../../public/assets/image/avatar.png";
+import { MdVerified } from "react-icons/md";
 
 type Props = {
   data: any;
   id: string;
-  stripePromise:any
-  clientSecret:string
-
+  stripePromise: any;
+  clientSecret: string;
 };
 
 const CourseDetails: FC<Props> = ({
   id,
   data,
   clientSecret,
-  stripePromise
-
+  stripePromise,
 }) => {
-  const [open,setOpen] = useState(false)
-  const {data:user} = useLoadUserQuery(undefined,{})
-  const [userdata,setUserdata] = useState()
+  const [open, setOpen] = useState(false);
+  const { data: user } = useLoadUserQuery(undefined, {});
+  const [userdata, setUserdata] = useState();
+  const [replyRatingOf, serReplyRatingOf] = useState(false);
 
-  
+  console.log(data);
 
   const discountPercentage =
     ((data?.estimatedPrice - data?.price) / data?.estimatedPrice) * 100;
 
   const discountPercentagePrice = discountPercentage.toFixed(0);
 
-
-      
-
-    useEffect(() => {
-     if(user){
-      console.log("user");
-      
-      setUserdata(user)
-     }
-    }, [user])
-    
-    
-    const isPurchased = userdata && userdata?.user?.courses.find((item:any)=> item._id === id)
-  console.log(isPurchased);
-  
-    const handleBuy = ()=>{
-      setOpen(true)
+  useEffect(() => {
+    if (user) {
+      setUserdata(user);
     }
+  }, [user]);
+
+  const isPurchased =
+    userdata && userdata?.user?.courses.find((item: any) => item._id === id);
+  console.log(isPurchased);
+
+  const handleBuy = () => {
+    setOpen(true);
+  };
 
   return (
     <div>
@@ -141,8 +138,8 @@ const CourseDetails: FC<Props> = ({
                 <br />
                 <br />
                 <div className="w-full">
-                  <div className="800px:flex items-center">
-                    <Ratings rating={data?.rating} />
+                  <div className="800px:flex items-center mb-5">
+                    <Ratings rating={data?.ratings} />
                     <div className="mb-2 800px:mb-[unset]">
                       <h1 className="text-[25px] font-Poppins text-black dark:text-white">
                         {Number.isInteger(data?.ratings)
@@ -153,42 +150,100 @@ const CourseDetails: FC<Props> = ({
                     </div>
 
                     <br />
-                    {(data?.review && [...data.reviews].reverse())?.map(
-                      (item: any, index: number) => (
-                        <div className="w-full pb-4" key={index}>
-                          <div className="flex">
-                            <div className="w-[50px] h-[50px]">
-                              <div className="w-[50px] h-[50px]  bg-slate-600 rounded-[50px] flex items-center justify-center cursor-pointer">
-                                <h1 className="uppercase text-[18px] text-black dark:text-white">
-                                  {item?.user?.name.slice(0, 2)}
-                                </h1>
-                              </div>
-                            </div>
-                            <div className="hidden 800px:block pl-2">
-                              <div className="flex items-center">
-                                <h1 className="text-[18px] pr-2 text-black dark:text-white">
-                                  {item.user.name}
-                                </h1>
-                                <Ratings rating={item.ratings} />
-                              </div>
-                              <p className="text-[18px] text-black dark:text-white">
-                                {item.comment}
-                              </p>
-                              <small className=" text-[#000000d1] dark:text-white">
-                                {format(item.createdAt)}
-                              </small>
-                            </div>
-                            <div className="800px:hidden pl-2 flex items-center">
-                              <h1 className="text-[18px] pr-2 text-black dark:text-white">
-                                {item.user.name}
-                              </h1>
-                              <Ratings rating={item.ratings} />
+                  </div>
+                  {(data?.reviews && [...data.reviews].reverse())?.map(
+                    (item: any, index: number) => (
+                      <div className="w-full pb-4" key={index}>
+                        <div className="flex">
+                          <div className="w-[50px] h-[50px]">
+                            <div className="w-[50px] h-[50px]  bg-slate-600 rounded-[50px] flex items-center justify-center cursor-pointer">
+                              <Image
+                                src={item ? item?.user?.avatar?.url : Avatar}
+                                alt="img not found"
+                                height={100}
+                                width={100}
+                                className="h-[50px] w-[50px] rounded-full object-cover"
+                              />
                             </div>
                           </div>
+                          <div className="w-full ps-3">
+                            <div className="flex items-center">
+                              <div>
+                                <h1 className="text-[20px]  text-black dark:text-white ">
+                                  {item?.user?.name}
+                                </h1>
+                              </div>
+                              {item.user && item.user.role === "admin" && (
+                                <div className="ps-2">
+                                  <MdVerified className="text-[20px] text-[#0084ff]" />
+                                </div>
+                              )}
+                            </div>
+
+                            <Ratings rating={item.rating} />
+                            <p className="800px:text-[18px] text-black dark:text-white">
+                              {item?.comment}
+                            </p>
+                            <small className=" text-black dark:text-white flex items-center">
+                              {" "}
+                              {format(
+                                item.createdAt ? item.createdAt : " 0 day"
+                              )}
+                              <p
+                              onClick={() => {
+                                serReplyRatingOf(!replyRatingOf);
+                              }}
+                              className="800px:text-[14px]  cursor-pointer text-black dark:text-white ps-3"
+                            >
+                              {replyRatingOf ? "Hide" : "View Reply"}
+                            </p>
+                            </small>
+                            
+                          </div>
                         </div>
-                      )
-                    )}
-                  </div>
+                        {replyRatingOf && (
+                          <>
+                          {item?.commentReplies.map(
+                            (reply: any, index: number) => (
+                              <div
+                                key={index}
+                                className="flex gap-x-2 ml-10 mt-5 "
+                              >
+                                <Image
+                                  src={reply ? reply.user.avatar.url : Avatar}
+                                  alt="img not found"
+                                  height={100}
+                                  width={100}
+                                  className="h-[50px] w-[50px] rounded-full object-cover"
+                                />
+  
+                                <div>
+                                  <div className="flex items-center">
+                                    <div>
+                                      <h1 className="text-[20px]  text-black dark:text-white ">
+                                        {reply?.user?.name}
+                                      </h1>
+                                    </div>
+                                    {reply.user &&
+                                      reply.user.role === "admin" && (
+                                        <div className="ps-2">
+                                          <MdVerified className="text-[20px] text-[#0084ff]" />
+                                        </div>
+                                      )}
+                                  </div>
+                                  <p className=" text-[17px] text-black dark:text-white font-Poppins">
+                                    {reply.comment}
+                                  </p>
+                                </div>
+                              </div>
+                            )
+                          )}
+                          </>
+                        )}
+                        
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             </div>
@@ -217,7 +272,8 @@ const CourseDetails: FC<Props> = ({
                   </Link>
                 ) : (
                   <div
-                    onClick={handleBuy} className={`${styles.button} !w-[180px] my-3 font-Poppins !bg-[#ff1040]`}
+                    onClick={handleBuy}
+                    className={`${styles.button} !w-[180px] my-3 font-Poppins !bg-[#ff1040]`}
                   >
                     {" "}
                     Buy Now {data?.price + " " + "$"}
@@ -242,27 +298,26 @@ const CourseDetails: FC<Props> = ({
         </div>
       </div>
       <>
-        {
-        open && (
+        {open && (
           <div className="w-full h-screen bg-[#00000036] fixed top-0 left-0 z-50 flex items-center justify-center">
             <div className="w-[500px] min-h-[500px] bg-white rounded-xl shadow-lg p-3 ">
               <div className="w-full flex justify-end">
-                <IoCloseOutline size={40} className='text-black cursor-pointer' onClick={() => setOpen(false)} />
+                <IoCloseOutline
+                  size={40}
+                  className="text-black cursor-pointer"
+                  onClick={() => setOpen(false)}
+                />
               </div>
               <div className="w-full p-5">
-                {
-                  stripePromise && clientSecret && (
-                    <Elements stripe={stripePromise} options={{clientSecret}} >
-                      <CheckOutForm setOpen={setOpen} data={data}/>
-                    </Elements>
-                  )
-                }
+                {stripePromise && clientSecret && (
+                  <Elements stripe={stripePromise} options={{ clientSecret }}>
+                    <CheckOutForm setOpen={setOpen} data={data} />
+                  </Elements>
+                )}
               </div>
             </div>
-            
           </div>
-        )
-      }
+        )}
       </>
     </div>
   );
