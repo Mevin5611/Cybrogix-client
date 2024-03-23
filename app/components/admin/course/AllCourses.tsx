@@ -18,7 +18,7 @@ const AllCourses = (props: Props) => {
   const [id, setId] = useState('');
   const {isLoading,data,error,refetch} = useGetAllCoursesForUsersQuery({},{refetchOnMountOrArgChange:true})
   const [deleteCourse,{isSuccess}] = useDeleteCourseMutation({})
-
+  
   const colums = [
     {
       field: "id",
