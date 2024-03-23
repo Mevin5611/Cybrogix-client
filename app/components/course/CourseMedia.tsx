@@ -22,6 +22,9 @@ import {
 import toast from "react-hot-toast";
 import { MdVerified } from "react-icons/md";
 import { IoSendSharp } from "react-icons/io5";
+import socketIO from 'socket.io-client'
+const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
+const socketId = socketIO(ENDPOINT,{transports:["websocket"]});
 
 type Props = {
   data: any;
@@ -129,6 +132,11 @@ const CourseMedia = ({
     if (isSuccess) {
       setQuestion("");
       refetch();
+      socketId.emit("notification",{
+        title:"New Question Recived",
+        message:`You Have a new question in ${data.content[activeVideo].title}`,
+        userId:userData?._id,
+      })
     }
     if (error) {
       if ("data" in error) {
@@ -139,6 +147,13 @@ const CourseMedia = ({
     if (answerSuccess) {
       setAnswer("");
       refetch();
+      if(userData.role !== "admin"){
+        socketId.emit("notification",{
+          title:"New replay Recived",
+          message:`You Have a new replay in question ${data.content[activeVideo].title}`,
+          userId:userData?._id,
+        })
+      }
     }
     if (anwerError) {
       if ("data" in anwerError) {
@@ -149,6 +164,11 @@ const CourseMedia = ({
     if (reviewSuccess) {
       setReview("");
       refetch();
+      socketId.emit("notification",{
+        title:"New Review Recived",
+        message:`You Have a new Review in ${data.content[activeVideo].title}`,
+        userId:userData?._id
+      })
     }
     if (reviewError) {
       if ("data" in reviewError) {
@@ -159,6 +179,12 @@ const CourseMedia = ({
     if (rerplySuccess) {
       setFX("");
       courseFetch();
+      socketId.emit("notification",{
+        title:"New Review replay Recived",
+        message:`You Have a new replay in your Review in ${data.content[activeVideo].title}`,
+        userId:userData?._id
+      })
+    
     }
     if (revrplyError) {
       if ("data" in revrplyError) {
