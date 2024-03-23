@@ -14,6 +14,7 @@ import { FaBedPulse } from "react-icons/fa6";
 import Image from "next/image";
 import Avatar from "../../../public/assets/image/avatar.png";
 import { MdVerified } from "react-icons/md";
+import toast from "react-hot-toast";
 
 type Props = {
   data: any;
@@ -40,7 +41,8 @@ const CourseDetails: FC<Props> = ({
   const [replyRatingOf, serReplyRatingOf] = useState(false);
 
   useEffect(() => {
-    const isPurchased = user && user?.user?.courses.find((item: any) => item._id === data._id);
+    setUserdata(user)
+    const isPurchased = user && user?.user?.courses.find((item: any) => item._id === data?._id);
     if(isPurchased){
       console.log("true");
       
@@ -66,7 +68,6 @@ const CourseDetails: FC<Props> = ({
     if(userdata){
       setOpen(true);
     }else{
-      toast.error("Please Login to Buy the course")
       setRoute("Login")
       openAuthModal(true)
     }
