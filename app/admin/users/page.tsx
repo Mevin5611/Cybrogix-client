@@ -14,7 +14,7 @@ const page = (props: Props) => {
     <div>
       <AdminProtected>
         <Heading
-          title="Cybrogix courses"
+          title="Cybrogix users"
           description="Elearning is the new method to study"
           keyword="Programming"
         />
@@ -24,7 +24,9 @@ const page = (props: Props) => {
           </div>
           <div className="w-[80%]">
           <DashboardHeader/>
-            <AllUsers/>
+            
+            <AllUsers />
+            
           </div>
         </div>
       </AdminProtected>
