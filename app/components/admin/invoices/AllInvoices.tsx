@@ -101,15 +101,6 @@ const AllInvoices:FC<Props> = ({isDashBoard}) => {
   ];
   const rows = [
     
-    {
-      id: "13265421654654",
-      userName: "badhon vai",
-      userEmail: "badhon@gmail.com",
-      title: "React js new course",
-      price: "$542",
-      joinAt: "2 days ago"
-    },
-    
   ];
 
   {
