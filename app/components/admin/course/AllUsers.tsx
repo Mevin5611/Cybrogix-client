@@ -1,3 +1,4 @@
+"use client";
 import React, { FC, useEffect, useState } from "react";
 import Loader from "../../Loader/Loader";
 import { Box, Button, Modal } from "@mui/material";
@@ -6,10 +7,13 @@ import { useTheme } from "next-themes";
 import toast from "react-hot-toast";
 import { AiFillEdit, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineEmail } from "react-icons/md";
+import { GrCertificate } from "react-icons/gr";
+import { RxCross1 } from "react-icons/rx";
 import {
   useDeleteUserMutation,
   useGetAllUsersQuery,
   useUpdateUserRoleMutation,
+  useUploadCertificateMutation,
 } from "@/redux/features/user/userApi";
 import { styles } from "@/app/styles/style";
 import { format } from "timeago.js";
@@ -24,13 +28,21 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
   const [active, setActive] = useState(false);
   const [addteam, setAddTeam] = useState(false);
   const [id, setId] = React.useState("");
+  const [course, setCourse] = React.useState("");
+  const [certificate, setcCertificate] = useState();
+  const [draging, setDraging] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const { isLoading, data, error, refetch } = useGetAllUsersQuery(
     {},
     { refetchOnMountOrArgChange: true }
   );
+  console.log(id);
+
   const [updateUserRole, { isSuccess: success, error: err }] =
     useUpdateUserRoleMutation();
   const [deleteUser, { isSuccess }] = useDeleteUserMutation({});
+  const [uploadCertificate, { isSuccess: certifySuccess }] =
+    useUploadCertificateMutation();
   const [updateRole, setUpdateRole] = React.useState({
     email: "",
     role: "",
@@ -60,7 +72,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
     {
       field: "courses",
       headerName: "Purchased",
-      flex: 0.5,
+      flex: 0.1,
     },
     {
       field: "created_at",
@@ -68,7 +80,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
       flex: 0.5,
     },
     {
-      field: "  ",
+      field: "mail",
       headerName: "Email",
       flex: 0.2,
       renderCell: (params: any) => {
@@ -79,8 +91,24 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
         );
       },
     },
+    {
+      field: "certificate",
+      headerName: "Certificate",
+      flex: 0.2,
+      renderCell: (params: any) => {
+        const certify = () => {
+          setId(params.row.id);
+          setModalOpen(true);
+        };
+        return (
+          <div onClick={() => certify()}>
+            <GrCertificate size={22} />
+          </div>
+        );
+      },
+    },
     !isTeam && {
-      field: " ",
+      field: "delete",
       headerName: "Delete",
       flex: 0.2,
       renderCell: (params: any) => {
@@ -89,7 +117,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
           setActive(true);
         };
         return (
-          <Button onClick={() => DeleteFunction()}>
+          <Button onClick={() => DeleteFunction()} >
             <AiOutlineDelete className="dark:text-white text-black" size={22} />
           </Button>
         );
@@ -138,25 +166,50 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
       }
     }
   };
-useEffect(() => {
-  if (isSuccess) {
-    setActive(false);
-    refetch();
-    toast.success("User deleted successfully");
-  }
-}, [isSuccess])
+  useEffect(() => {
+    if (isSuccess) {
+      setActive(false);
+      refetch();
+      toast.success("User deleted successfully");
+    }
+    if (certifySuccess) {
+      setModalOpen(false)
+      refetch();
+      toast.success("certificate upload successfully");
+      setcCertificate('')
+      setCourse('')
+    }
+  }, [isSuccess,certifySuccess]);
 
   const DeleteUserByID = async () => {
     await deleteUser(id);
-    
+  };
+
+  const handleFileChange = (e: any) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        setcCertificate(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async() => {
+    /* console.log({ certificates: certificate, course, userId: id }); */
+
+    await uploadCertificate({certificates:certificate,course,userId:id})
   };
 
   return (
-    <div className="">
+    <div className="p-10">
       {isLoading ? (
         <Loader />
       ) : (
-        <Box>
+        <Box  >
           {isTeam && (
             <div className="flex justify-end mb-3 mt-3">
               <div>
@@ -223,7 +276,7 @@ useEffect(() => {
               },
             }}
           >
-            <DataGrid checkboxSelection rows={rows} columns={columns} />
+            <DataGrid checkboxSelection rows={rows} columns={columns}  />
           </Box>
           {active && (
             <Modal
@@ -312,6 +365,72 @@ useEffect(() => {
             </div>
           </Box>
         </Modal>
+      )}
+
+      {modalOpen && (
+        <div className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center  bg-[#000000] w-full h-full bg-opacity-55 ">
+          <div className="w-[1000px] h-[500px] bg-[#202020]  rounded-md">
+          <div className="w-full flex justify-end pt-3 pr-3">
+            <RxCross1 size={25} onClick={()=> setModalOpen(false)} />
+            </div>
+            <div className=" w-full h-full flex justify-center items-center">
+
+          <div className="w-[800px]  ">
+          
+            <div>
+              <label htmlFor="">Course Name</label>
+
+              <input
+                type="name"
+                name=""
+                required
+                value={course}
+                onChange={(e) => setCourse(e.target.value)}
+                id="name"
+                placeholder="MERN stack lms platforms with next 13  "
+                className={styles.input}
+              />
+            </div>
+            <br />
+            <input
+              type="file"
+              accept="image/*"
+              id="file"
+              className="hidden"
+              onChange={handleFileChange}
+              
+            />
+            <label
+              htmlFor="file"
+              className={`w-full min-h-[15vh] dark:border-white border-[#00000060] p-3 border flex items-center justify-center ${
+                draging ? "bg-blue-500" : "bg-transparent"
+              }`}
+            >
+              {certificate ? (
+                <img
+                  src={certificate}
+                  alt=""
+                  className="max-h-full w-full object-cover"
+                />
+              ) : (
+                <span className="text-black dark:text-white">
+                  Drag and drop your certificate here or click to browse
+                </span>
+              )}
+            </label>
+            <br />
+            <div className="w-full flex items-center justify-end">
+              <button
+                onClick={() => handleSubmit()}
+                className={`${styles.button} !w-[250px]`}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
