@@ -15,7 +15,7 @@ const Page: FC<props> = () => {
   const [activeItem, setActiveItem] = useState(0);
   const [route, setRoute] = useState("Login");
   return (
-    <div>
+    <>
       <Heading
         title="Cybrogix"
         description="Elearning is the new method to study"
@@ -33,7 +33,7 @@ const Page: FC<props> = () => {
       <Reviews/>
       <Faq/>
       <Footer/>
-    </div>
+    </>
   );
 };
 
