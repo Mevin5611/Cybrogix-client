@@ -17,15 +17,15 @@ export const navItemData = [
   },
   {
     name: "About",
-    url: "/About",
+    url: "/about",
   },
   {
     name: "Policy",
-    url: "/policy]",
+    url: "/policy",
   },
   {
     name: "FAQ",
-    url: "/faq",
+    url: "/faqhome",
   },
 ];
 
