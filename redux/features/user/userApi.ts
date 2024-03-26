@@ -48,7 +48,15 @@ export const userApi = apiSlice.injectEndpoints({
                 credentials:"include" as const
             })
         }),
+        uploadCertificate:builder.mutation({
+            query:({certificates,course,userId})=>({
+                url:`upload-certificate/${userId}`,
+                method:"POST",
+                body:{certificates,course,userId},
+                credentials:"include" as const
+            })
+        }),
     })
 })
 
-export const {useUpdateAvatarMutation,useUpdateInfoMutation,useUpdatePasswordMutation,useGetAllUsersQuery,useUpdateUserRoleMutation,useDeleteUserMutation}= userApi
+export const {useUpdateAvatarMutation,useUpdateInfoMutation,useUpdatePasswordMutation,useGetAllUsersQuery,useUpdateUserRoleMutation,useDeleteUserMutation,useUploadCertificateMutation}= userApi
