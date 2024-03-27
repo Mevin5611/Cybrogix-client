@@ -8,6 +8,7 @@ import ChangePassword from "./ChangePassword";
 import EnrolledCourse from "./EnrolledCourse";
 import Certificates from "./Certificates";
 
+
 type Props = {
   user: any;
 };
@@ -22,6 +23,7 @@ const Profile: FC<Props> = ({ user }) => {
   const logoutHandler = async () => {
     await signOut();
     setLogout(true);
+    
   };
 
   if (typeof window !== "undefined") {

@@ -18,7 +18,7 @@ const Page:FC<Props> = (props) => {
   const {user} = useSelector((state:any)=> state.auth)
 
   return (
-    <>
+    <div className="min-h-screen">
       <Protected>
       <Heading
         title={`${user.name} Profile`}
@@ -36,7 +36,7 @@ const Page:FC<Props> = (props) => {
       user={user}
       />
       </Protected>
-    </>
+    </div>
   );
 };
 
