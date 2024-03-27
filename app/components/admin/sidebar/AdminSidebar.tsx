@@ -17,15 +17,26 @@ import { IoIosAnalytics } from "react-icons/io";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
 import { AiOutlineLogout, AiOutlineSetting } from "react-icons/ai";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
+import { useLogoutQuery } from "@/redux/features/auth/authApi";
 
 type Props = {
   select?: number;
   setSelect?: (select: number) => void;
+  
 };
 
 const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
   const { user } = useSelector((state: any) => state.auth);
   const [Collapse, setCollapse] = useState(false);
+  const [logout, setLogout] = useState(false);
+  const {} = useLogoutQuery(undefined, { skip: !logout ? true : false });
+
+  const logoutHandler = async () => {
+    await signOut();
+    setLogout(true);
+
+  }
   return (
     <>
       <Sidebar collapsed={Collapse} backgroundColor="#3d407d" width="230px">
@@ -298,7 +309,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
             </div> */}
 
             <div
-              onClick={() => setSelect(13)}
+              onClick={() => logoutHandler()}
               className={`${
                 select === 14 && "text-blue-300"
               } flex gap-x-5 items-center  cursor-pointer hover:text-blue-600 duration-200 p-1 mt-2 rounded-sm`}
