@@ -22,9 +22,11 @@ const Page = (props: Props) => {
           <div className="1500px:w-[15%] w-1/5">
             <AdminSidebar />
           </div>
-          <div className="w-[80%]">
+          <div className="w-[85%]">
             <DashboardHeader />
-            <AllInvoices />
+            <div className="m-10 ms-24">
+              <AllInvoices />
+            </div>
           </div>
         </div>
       </AdminProtected>
