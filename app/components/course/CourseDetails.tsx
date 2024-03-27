@@ -21,8 +21,8 @@ type Props = {
   id: string;
   stripePromise: any;
   clientSecret: string;
-  setRoute:any
-  setOpen:any
+  setRoute: any;
+  setOpen: any;
 };
 
 const CourseDetails: FC<Props> = ({
@@ -31,45 +31,37 @@ const CourseDetails: FC<Props> = ({
   clientSecret,
   stripePromise,
   setRoute,
-  setOpen:openAuthModal
+  setOpen: openAuthModal,
 }) => {
   const [open, setOpen] = useState(false);
-  const [purchased,setPurchased] = useState(false);
+  const [purchased, setPurchased] = useState(false);
   const { data: user } = useLoadUserQuery(undefined, {});
 
   const [userdata, setUserdata] = useState<any>();
   const [replyRatingOf, serReplyRatingOf] = useState(false);
 
   useEffect(() => {
-    setUserdata(user)
-    const isPurchased = user && user?.user?.courses.find((item: any) => item._id === data?._id);
-    if(isPurchased){
+    setUserdata(user);
+    const isPurchased =
+      user && user?.user?.courses.find((item: any) => item._id === data?._id);
+    if (isPurchased) {
       console.log("true");
-      
-      setPurchased(true)
+
+      setPurchased(true);
     }
-}, [user]);
+  }, [user]);
 
   const discountPercentage =
     ((data?.estimatedPrice - data?.price) / data?.estimatedPrice) * 100;
 
   const discountPercentagePrice = discountPercentage.toFixed(0);
 
-
- 
-
-
-
-
-
-
-
   const handleBuy = () => {
-    if(userdata){
+    if (userdata) {
       setOpen(true);
-    }else{
-      setRoute("Login")
-      openAuthModal(true)
+    } else {
+      setRoute("Login");
+      openAuthModal(true);
     }
   };
 
@@ -209,57 +201,55 @@ const CourseDetails: FC<Props> = ({
                                 item.createdAt ? item.createdAt : " 0 day"
                               )}
                               <p
-                              onClick={() => {
-                                serReplyRatingOf(!replyRatingOf);
-                              }}
-                              className="800px:text-[14px]  cursor-pointer text-black dark:text-white ps-3"
-                            >
-                              {replyRatingOf ? "Hide" : "View Reply"}
-                            </p>
+                                onClick={() => {
+                                  serReplyRatingOf(!replyRatingOf);
+                                }}
+                                className="800px:text-[14px]  cursor-pointer text-black dark:text-white ps-3"
+                              >
+                                {replyRatingOf ? "Hide" : "View Reply"}
+                              </p>
                             </small>
-                            
                           </div>
                         </div>
                         {replyRatingOf && (
                           <>
-                          {item?.commentReplies.map(
-                            (reply: any, index: number) => (
-                              <div
-                                key={index}
-                                className="flex gap-x-2 ml-10 mt-5 "
-                              >
-                                <Image
-                                  src={reply ? reply.user.avatar.url : Avatar}
-                                  alt="img not found"
-                                  height={100}
-                                  width={100}
-                                  className="h-[50px] w-[50px] rounded-full object-cover"
-                                />
-  
-                                <div>
-                                  <div className="flex items-center">
-                                    <div>
-                                      <h1 className="text-[20px]  text-black dark:text-white ">
-                                        {reply?.user?.name}
-                                      </h1>
+                            {item?.commentReplies.map(
+                              (reply: any, index: number) => (
+                                <div
+                                  key={index}
+                                  className="flex gap-x-2 ml-10 mt-5 "
+                                >
+                                  <Image
+                                    src={reply ? reply.user.avatar.url : Avatar}
+                                    alt="img not found"
+                                    height={100}
+                                    width={100}
+                                    className="h-[50px] w-[50px] rounded-full object-cover"
+                                  />
+
+                                  <div>
+                                    <div className="flex items-center">
+                                      <div>
+                                        <h1 className="text-[20px]  text-black dark:text-white ">
+                                          {reply?.user?.name}
+                                        </h1>
+                                      </div>
+                                      {reply.user &&
+                                        reply.user.role === "admin" && (
+                                          <div className="ps-2">
+                                            <MdVerified className="text-[20px] text-[#0084ff]" />
+                                          </div>
+                                        )}
                                     </div>
-                                    {reply.user &&
-                                      reply.user.role === "admin" && (
-                                        <div className="ps-2">
-                                          <MdVerified className="text-[20px] text-[#0084ff]" />
-                                        </div>
-                                      )}
+                                    <p className=" text-[17px] text-black dark:text-white font-Poppins">
+                                      {reply.comment}
+                                    </p>
                                   </div>
-                                  <p className=" text-[17px] text-black dark:text-white font-Poppins">
-                                    {reply.comment}
-                                  </p>
                                 </div>
-                              </div>
-                            )
-                          )}
+                              )
+                            )}
                           </>
                         )}
-                        
                       </div>
                     )
                   )}

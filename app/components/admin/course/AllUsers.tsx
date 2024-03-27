@@ -20,7 +20,7 @@ import { format } from "timeago.js";
 import Link from "next/link";
 
 type Props = {
-  isTeam: boolean;
+  isTeam?: boolean;
 };
 
 const AllUsers: FC<Props> = ({ isTeam }) => {
@@ -117,7 +117,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
           setActive(true);
         };
         return (
-          <Button onClick={() => DeleteFunction()} >
+          <Button onClick={() => DeleteFunction()}>
             <AiOutlineDelete className="dark:text-white text-black" size={22} />
           </Button>
         );
@@ -173,13 +173,13 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
       toast.success("User deleted successfully");
     }
     if (certifySuccess) {
-      setModalOpen(false)
+      setModalOpen(false);
       refetch();
       toast.success("certificate upload successfully");
-      setcCertificate('')
-      setCourse('')
+      setcCertificate("");
+      setCourse("");
     }
-  }, [isSuccess,certifySuccess]);
+  }, [isSuccess, certifySuccess]);
 
   const DeleteUserByID = async () => {
     await deleteUser(id);
@@ -198,18 +198,18 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
     }
   };
 
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     /* console.log({ certificates: certificate, course, userId: id }); */
 
-    await uploadCertificate({certificates:certificate,course,userId:id})
+    await uploadCertificate({ certificates: certificate, course, userId: id });
   };
 
   return (
-    <div className="p-10">
+    <div className="">
       {isLoading ? (
         <Loader />
       ) : (
-        <Box  >
+        <Box>
           {isTeam && (
             <div className="flex justify-end mb-3 mt-3">
               <div>
@@ -276,7 +276,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
               },
             }}
           >
-            <DataGrid checkboxSelection rows={rows} columns={columns}  />
+            <DataGrid checkboxSelection rows={rows} columns={columns} />
           </Box>
           {active && (
             <Modal
@@ -370,64 +370,61 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
       {modalOpen && (
         <div className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center  bg-[#000000] w-full h-full bg-opacity-55 ">
           <div className="w-[1000px] h-[500px] bg-[#202020]  rounded-md">
-          <div className="w-full flex justify-end pt-3 pr-3">
-            <RxCross1 size={25} onClick={()=> setModalOpen(false)} />
+            <div className="w-full flex justify-end pt-3 pr-3">
+              <RxCross1 size={25} onClick={() => setModalOpen(false)} />
             </div>
             <div className=" w-full h-full flex justify-center items-center">
+              <div className="w-[800px]  ">
+                <div>
+                  <label htmlFor="">Course Name</label>
 
-          <div className="w-[800px]  ">
-          
-            <div>
-              <label htmlFor="">Course Name</label>
-
-              <input
-                type="name"
-                name=""
-                required
-                value={course}
-                onChange={(e) => setCourse(e.target.value)}
-                id="name"
-                placeholder="MERN stack lms platforms with next 13  "
-                className={styles.input}
-              />
-            </div>
-            <br />
-            <input
-              type="file"
-              accept="image/*"
-              id="file"
-              className="hidden"
-              onChange={handleFileChange}
-              
-            />
-            <label
-              htmlFor="file"
-              className={`w-full min-h-[15vh] dark:border-white border-[#00000060] p-3 border flex items-center justify-center ${
-                draging ? "bg-blue-500" : "bg-transparent"
-              }`}
-            >
-              {certificate ? (
-                <img
-                  src={certificate}
-                  alt=""
-                  className="max-h-full w-full object-cover"
+                  <input
+                    type="name"
+                    name=""
+                    required
+                    value={course}
+                    onChange={(e) => setCourse(e.target.value)}
+                    id="name"
+                    placeholder="MERN stack lms platforms with next 13  "
+                    className={styles.input}
+                  />
+                </div>
+                <br />
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="file"
+                  className="hidden"
+                  onChange={handleFileChange}
                 />
-              ) : (
-                <span className="text-black dark:text-white">
-                  Drag and drop your certificate here or click to browse
-                </span>
-              )}
-            </label>
-            <br />
-            <div className="w-full flex items-center justify-end">
-              <button
-                onClick={() => handleSubmit()}
-                className={`${styles.button} !w-[250px]`}
-              >
-                Submit
-              </button>
-            </div>
-          </div>
+                <label
+                  htmlFor="file"
+                  className={`w-full min-h-[15vh] dark:border-white border-[#00000060] p-3 border flex items-center justify-center ${
+                    draging ? "bg-blue-500" : "bg-transparent"
+                  }`}
+                >
+                  {certificate ? (
+                    <img
+                      src={certificate}
+                      alt=""
+                      className="max-h-full w-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-black dark:text-white">
+                      Drag and drop your certificate here or click to browse
+                    </span>
+                  )}
+                </label>
+                <br />
+                <div className="w-full flex items-center justify-end">
+                  <button
+                    onClick={() => handleSubmit()}
+                    className={`${styles.button} !w-[250px]`}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

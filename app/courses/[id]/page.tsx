@@ -1,19 +1,16 @@
-'use client'
+"use client";
 
-import React, { FC } from 'react'
-import CourseDetailsPage from '../../components/course/CourseDetailsPage'
+import React, { FC } from "react";
+import CourseDetailsPage from "../../components/course/CourseDetailsPage";
 
-type Props = {
-    
-}
+type Props = {};
 
-const page= ({params}:any) => {
-    
+const Page = ({ params }: any) => {
   return (
     <>
-    <CourseDetailsPage id={params.id}/>
+      <CourseDetailsPage id={params.id} />
     </>
-  )
-}
+  );
+};
 
-export default page
+export default Page;

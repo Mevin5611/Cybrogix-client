@@ -7,7 +7,10 @@ import UserAnalytics from "../analytics/UserAnalytics";
 import OrderAnalytics from "../analytics/OrderAnalytics";
 
 import AllInvoices from "../invoices/AllInvoices";
-import { useGetOrderAnalyticsQuery, useGetUsersAnalyticsQuery } from "@/redux/features/analytics/analytics";
+import {
+  useGetOrderAnalyticsQuery,
+  useGetUsersAnalyticsQuery,
+} from "@/redux/features/analytics/analytics";
 
 type Props = {
   open?: boolean;
@@ -42,46 +45,57 @@ const CircularProgressWithLabel: FC<Props> = ({ value, open }) => {
   );
 };
 
-const DashboardWidget:FC<Props> = ({open}) => {
-  const [comparePercentage, setComparePercentage] = useState()
-  const [ordersComparePercentage, setOrdersComparePercentage] = useState<any>()
-  const [userComparePercentage, setUserComparePercentage] = useState<any>()
+const DashboardWidget: FC<Props> = ({ open }) => {
+  const [comparePercentage, setComparePercentage] = useState();
+  const [ordersComparePercentage, setOrdersComparePercentage] = useState<any>();
+  const [userComparePercentage, setUserComparePercentage] = useState<any>();
   const { data, isLoading, error } = useGetOrderAnalyticsQuery({});
-  const {data:userData,isLoading:userLoading,isError:err} = useGetUsersAnalyticsQuery({})
+  const {
+    data: userData,
+    isLoading: userLoading,
+    isError: err,
+  } = useGetUsersAnalyticsQuery({});
 
   useEffect(() => {
-   if(isLoading && userLoading){
-    return
-   }else{
-    if(data && userData){
-      const userLastTwoMonths=userData.users.last12Months.slice(-2)
-        const orderLastTwoMonths=data.orders.last12Months.slice(-2)
-        if(userLastTwoMonths.length===2 && orderLastTwoMonths.length===2){
-          const userCurrentMonth=userLastTwoMonths[1].count
-          const userPreviousMonth=userLastTwoMonths[0].count
-          const orderCurrentMonth=orderLastTwoMonths[1].count
-          const orderPreviousMonth=orderLastTwoMonths[0].count
-          const userPercentage= userPreviousMonth !==0?((userCurrentMonth-userPreviousMonth)/userPreviousMonth)*100:100
-          const orderPercentage= orderPreviousMonth!==0? ((orderCurrentMonth-orderPreviousMonth)/orderPreviousMonth)*100:100
+    if (isLoading && userLoading) {
+      return;
+    } else {
+      if (data && userData) {
+        const userLastTwoMonths = userData.users.last12Months.slice(-2);
+        const orderLastTwoMonths = data.orders.last12Months.slice(-2);
+        if (userLastTwoMonths.length === 2 && orderLastTwoMonths.length === 2) {
+          const userCurrentMonth = userLastTwoMonths[1].count;
+          const userPreviousMonth = userLastTwoMonths[0].count;
+          const orderCurrentMonth = orderLastTwoMonths[1].count;
+          const orderPreviousMonth = orderLastTwoMonths[0].count;
+          const userPercentage =
+            userPreviousMonth !== 0
+              ? ((userCurrentMonth - userPreviousMonth) / userPreviousMonth) *
+                100
+              : 100;
+          const orderPercentage =
+            orderPreviousMonth !== 0
+              ? ((orderCurrentMonth - orderPreviousMonth) /
+                  orderPreviousMonth) *
+                100
+              : 100;
 
           setUserComparePercentage({
-            currentMonth:userCurrentMonth,
-            previousMonth:userPreviousMonth,
-            percentage:userPercentage
-          })
-
+            currentMonth: userCurrentMonth,
+            previousMonth: userPreviousMonth,
+            percentage: userPercentage,
+          });
 
           setOrdersComparePercentage({
-            currentMonth:orderCurrentMonth,
-            previousMonth:orderPreviousMonth,
-            percentage:orderPercentage
-
-          })
+            currentMonth: orderCurrentMonth,
+            previousMonth: orderPreviousMonth,
+            percentage: orderPercentage,
+          });
         }
+      }
     }
-   }
-  }, [isLoading,userLoading,data,userData])
-  
+  }, [isLoading, userLoading, data, userData]);
+
   return (
     <div className="mt-[30px]">
       <div className="grid grid-cols-[75%,25%]">
@@ -103,8 +117,16 @@ const DashboardWidget:FC<Props> = ({open}) => {
                 </h1>
               </div>
               <div>
-                <CircularProgressWithLabel value={ordersComparePercentage?.percentage} open={open} />
-                <h1 className="text-center pt-4 dark:text-white text-black">{ordersComparePercentage?.percentage>0? '+' + ordersComparePercentage?.percentage.toFixed(2): '-' + ordersComparePercentage?.percentage.toFixed(2)}%</h1>
+                <CircularProgressWithLabel
+                  value={ordersComparePercentage?.percentage}
+                  open={open}
+                />
+                <h1 className="text-center pt-4 dark:text-white text-black">
+                  {ordersComparePercentage?.percentage > 0
+                    ? "+" + ordersComparePercentage?.percentage.toFixed(2)
+                    : "-" + ordersComparePercentage?.percentage.toFixed(2)}
+                  %
+                </h1>
               </div>
             </div>
           </div>
@@ -121,8 +143,16 @@ const DashboardWidget:FC<Props> = ({open}) => {
                 </h1>
               </div>
               <div>
-                <CircularProgressWithLabel value={userComparePercentage?.percentage} open={open} />
-                <h1 className="text-center pt-4 dark:text-white text-black">{userComparePercentage?.percentage>0? '+' + userComparePercentage?.percentage.toFixed(2): '-' + userComparePercentage?.percentage.toFixed(2)}%</h1>
+                <CircularProgressWithLabel
+                  value={userComparePercentage?.percentage}
+                  open={open}
+                />
+                <h1 className="text-center pt-4 dark:text-white text-black">
+                  {userComparePercentage?.percentage > 0
+                    ? "+" + userComparePercentage?.percentage.toFixed(2)
+                    : "-" + userComparePercentage?.percentage.toFixed(2)}
+                  %
+                </h1>
               </div>
             </div>
           </div>
@@ -134,15 +164,13 @@ const DashboardWidget:FC<Props> = ({open}) => {
         </div>
       </div>
       <div className="w-[94%] shadow m-auto ">
-          <h3 className="dark:text-white text-black  text-[20px] font-Poppins font-[400] pb-10 ps-10 mt-5 ">
-            Recent Transaction
-          </h3>
+        <h3 className="dark:text-white text-black  text-[20px] font-Poppins font-[400] pb-10 ps-10 mt-5 ">
+          Recent Transaction
+        </h3>
         <div className="mb-10 ps-10">
-
           <AllInvoices isDashBoard={false} />
         </div>
       </div>
-      
     </div>
   );
 };

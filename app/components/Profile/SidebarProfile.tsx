@@ -34,7 +34,9 @@ const SidebarProfile: FC<Props> = ({
         onClick={() => setActive(1)}
       >
         <Image
-          src={user.avatar || avatar ? user.avatar.url || avatar : avatarDefault}
+          src={
+            user.avatar || avatar ? user.avatar.url || avatar : avatarDefault
+          }
           width={30}
           height={30}
           alt=""
@@ -70,23 +72,21 @@ const SidebarProfile: FC<Props> = ({
           Enrolled Courses
         </h5>
       </div>
-      {
-        user.role === "admin" && (
-          <Link href={"/admin"}
-        className={`w-full flex items-center px-3 py-4 cursor-pointer ${
-          active === 5
-            ? "dark:bg-slate-800 bg-white dark:border-b-0 border-b"
-            : "bg-transparent"
-        }`}
-        
-      >
-        <MdSpaceDashboard size={20} className="dark:text-white text-black" />
-        <h5 className="pl-2 800px:block hidden dark:text-white text-black font-Poppins">
-          Admin Dashboard
-        </h5>
-      </Link>
-        )
-      }
+      {user.role === "admin" && (
+        <Link
+          href={"/admin"}
+          className={`w-full flex items-center px-3 py-4 cursor-pointer ${
+            active === 5
+              ? "dark:bg-slate-800 bg-white dark:border-b-0 border-b"
+              : "bg-transparent"
+          }`}
+        >
+          <MdSpaceDashboard size={20} className="dark:text-white text-black" />
+          <h5 className="pl-2 800px:block hidden dark:text-white text-black font-Poppins">
+            Admin Dashboard
+          </h5>
+        </Link>
+      )}
       <div
         className={`w-full flex items-center px-3 py-4 cursor-pointer ${
           active === 4

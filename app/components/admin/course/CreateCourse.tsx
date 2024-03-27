@@ -18,7 +18,7 @@ const CreateCourse: FC<Props> = () => {
   const [courseInfo, setCourseInfo] = useState({
     name: "",
     description: "",
-    categories:"",
+    categories: "",
     price: "",
     estimatedPrice: "",
     tags: "",
@@ -26,7 +26,6 @@ const CreateCourse: FC<Props> = () => {
     demoUrl: "",
     thumbnail: "",
   });
-  
 
   const [benefits, setBenefits] = useState([{ title: "" }]);
   const [prerequisites, setPrerequisites] = useState([{ title: "" }]);
@@ -36,7 +35,7 @@ const CreateCourse: FC<Props> = () => {
       title: "",
       description: "",
       videoSection: "",
-      videoLength:"",
+      videoLength: "",
       links: [
         {
           title: "",
@@ -48,7 +47,6 @@ const CreateCourse: FC<Props> = () => {
   ]);
   const [courseData, setCourseData] = useState({});
   console.log(courseData);
-  
 
   const handleSubmit = async () => {
     // Format benefits array
@@ -64,7 +62,7 @@ const CreateCourse: FC<Props> = () => {
       title: content.title,
       description: content.description,
       videoSection: content.videoSection,
-      videoLength:content.videoLength,
+      videoLength: content.videoLength,
       links: content.links?.map((links) => ({
         title: links.title,
         url: links.url,
@@ -109,7 +107,7 @@ const CreateCourse: FC<Props> = () => {
       await createCourse(data);
     }
   };
-  
+
   return (
     <div className="w-full flex min-h-screen">
       <div className="w-[80%]">

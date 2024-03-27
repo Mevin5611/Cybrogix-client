@@ -1,17 +1,17 @@
-'use client'
-import AdminProtected from '@/app/hooks/adminProtected'
-import AdminSidebar from '../../../app/components/admin/sidebar/AdminSidebar'
-import AllCourses from '../../../app/components/admin/course/AllCourses'
-import Heading from '../../../app/utils/Heading'
-import React from 'react'
-import DashboardHero from '@/app/components/admin/dashboard/DashboardHero'
-import DashboardHeader from '@/app/components/admin/dashboard/DashboardHeader'
+"use client";
+import AdminProtected from "@/app/hooks/adminProtected";
+import AdminSidebar from "../../../app/components/admin/sidebar/AdminSidebar";
+import AllCourses from "../../../app/components/admin/course/AllCourses";
+import Heading from "../../../app/utils/Heading";
+import React from "react";
+import DashboardHero from "@/app/components/admin/dashboard/DashboardHero";
+import DashboardHeader from "@/app/components/admin/dashboard/DashboardHeader";
 
-type Props = {}
+type Props = {};
 
-const page = (props: Props) => {
+const Page = (props: Props) => {
   return (
-    <div>
+    <>
       <AdminProtected>
         <Heading
           title="Cybrogix courses"
@@ -20,16 +20,16 @@ const page = (props: Props) => {
         />
         <div className="flex h-[200vh]">
           <div className="1500px:w-[15%] w-1/5">
-            <AdminSidebar/>
+            <AdminSidebar />
           </div>
           <div className="w-[80%]">
-          <DashboardHeader/>
-            <AllCourses/>
+            <DashboardHeader />
+            <AllCourses />
           </div>
         </div>
       </AdminProtected>
-    </div>
-  )
-}
+    </>
+  );
+};
 
-export default page
+export default Page;

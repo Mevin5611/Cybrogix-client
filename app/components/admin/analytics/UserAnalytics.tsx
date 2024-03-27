@@ -1,4 +1,3 @@
-
 import React from "react";
 import Loader from "../../Loader/Loader";
 
@@ -18,11 +17,11 @@ type Props = {
 };
 
 const UserAnalytics = ({ DashBoard }: Props) => {
-    const {data,isLoading,isError} = useGetUsersAnalyticsQuery({})
-    console.log(data);
-    
+  const { data, isLoading, isError } = useGetUsersAnalyticsQuery({});
+  console.log(data);
+
   const analyticsData: any = [
-     /* {name:'january 2023', count:452},
+    /* {name:'january 2023', count:452},
      {name:'february 2023', count:42},
      {name:'march 2023', count:425},
      {name:'april 2023', count:2},
@@ -35,8 +34,6 @@ const UserAnalytics = ({ DashBoard }: Props) => {
      {name:'november 2023', count:242},
      {name:'december 2023', count:278}, */
   ];
-
-
 
   data &&
     data?.users?.last12Months?.forEach((item: any, index: number) =>

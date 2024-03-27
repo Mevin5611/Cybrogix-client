@@ -1,30 +1,38 @@
-import { styles } from '@/app/styles/style'
-import React, { FC } from 'react'
-import { IoCheckmarkDoneOutline } from 'react-icons/io5'
-import CoursePlayer from "./CoursePlayer"
-import Ratings from '../../../utils/Ratings'
+import { styles } from "@/app/styles/style";
+import React, { FC } from "react";
+import { IoCheckmarkDoneOutline } from "react-icons/io5";
+import CoursePlayer from "./CoursePlayer";
+import Ratings from "../../../utils/Ratings";
 
 type Props = {
-    active:number
-    setActive:(active:number)=> void
-    handleCourseCreate:any
-    courseData:any
-    isEdit?:boolean
-}
+  active: number;
+  setActive: (active: number) => void;
+  handleCourseCreate: any;
+  courseData: any;
+  isEdit?: boolean;
+};
 
-const CoursePreview:FC<Props> = ({active,setActive,courseData,handleCourseCreate,isEdit}) => {
-    const discountPercentage=((courseData?.estimatedPrice-courseData?.price)/courseData?.estimatedPrice)*100
+const CoursePreview: FC<Props> = ({
+  active,
+  setActive,
+  courseData,
+  handleCourseCreate,
+  isEdit,
+}) => {
+  const discountPercentage =
+    ((courseData?.estimatedPrice - courseData?.price) /
+      courseData?.estimatedPrice) *
+    100;
 
-    const discountPercentagePrice=discountPercentage.toFixed(0)
-    const handelPrev =()=>{
-        setActive(active - 1)
-    }
-    const handelNext = () =>{
-        handleCourseCreate()
-    }
+  const discountPercentagePrice = discountPercentage.toFixed(0);
+  const handelPrev = () => {
+    setActive(active - 1);
+  };
+  const handelNext = () => {
+    handleCourseCreate();
+  };
   return (
     <div className="w-[90%] m-auto py-5 mb-5">
-    
       <div className="w-full relative">
         <div className="w-full mt-10">
           <CoursePlayer
@@ -35,28 +43,32 @@ const CoursePreview:FC<Props> = ({active,setActive,courseData,handleCourseCreate
 
         <div className=" flex items-center">
           <h1 className="pt-5 text-[25px]">
-            {courseData?.pride===0? 'Free' : courseData?.price+ '$'}
+            {courseData?.pride === 0 ? "Free" : courseData?.price + "$"}
           </h1>
           <h1 className="pl-3 text-[20px] mt-2 line-through opacity-80">
             {courseData?.estimatedPrice} $
-
           </h1>
 
-            <h4 className="pl-5 pt-4 text-[22px]">
-              {discountPercentagePrice} % off
-            </h4>
+          <h4 className="pl-5 pt-4 text-[22px]">
+            {discountPercentagePrice} % off
+          </h4>
         </div>
         <div className=" flex items-center">
-          <div className={`${styles.button} !w-[180px] my-3 font-Poppins !bg-[crimson] cursor-not-allowed`}>
+          <div
+            className={`${styles.button} !w-[180px] my-3 font-Poppins !bg-[crimson] cursor-not-allowed`}
+          >
             Buy Now {courseData.price}
-
           </div>
         </div>
         <div className="flex items-center">
-          <input type="text"
-          placeholder="Discount Code ..."
-          className={`${styles.input} !w-[60%] ml-3 !mt-0 `} />
-          <div className={`${styles.button} !w-[120px] my-3 ml-4 cursor-pointer font-Poppins `}>
+          <input
+            type="text"
+            placeholder="Discount Code ..."
+            className={`${styles.input} !w-[60%] ml-3 !mt-0 `}
+          />
+          <div
+            className={`${styles.button} !w-[120px] my-3 ml-4 cursor-pointer font-Poppins `}
+          >
             Apply
           </div>
         </div>
@@ -67,10 +79,12 @@ const CoursePreview:FC<Props> = ({active,setActive,courseData,handleCourseCreate
       </div>
       <div className="w-full">
         <div className="w-full 800px:pr-5">
-          <h1 className="text-[25px] font-Poppins font-[600]">{courseData?.name}</h1>
+          <h1 className="text-[25px] font-Poppins font-[600]">
+            {courseData?.name}
+          </h1>
           <div className="flex items-center justify-between pt-3">
             <div className="flex items-center">
-              <Ratings rating={3.5}/>
+              <Ratings rating={3.5} />
               <h1>0 Reviews</h1>
             </div>
             <h2>0 Student</h2>
@@ -80,28 +94,26 @@ const CoursePreview:FC<Props> = ({active,setActive,courseData,handleCourseCreate
             What you will learn from this course?
           </h1>
         </div>
-        {
-          courseData?.benefits?.map((item:any,index:number)=>(
-            <div key={index} className="w-full flex 800px:items-center py-2">
-              <div className="w-[15px] mr-1">
+        {courseData?.benefits?.map((item: any, index: number) => (
+          <div key={index} className="w-full flex 800px:items-center py-2">
+            <div className="w-[15px] mr-1">
               <IoCheckmarkDoneOutline size={20} />
-              </div>
-              <p className="pl-2">{item.title}</p>
             </div>
-          ))
-        }
+            <p className="pl-2">{item.title}</p>
+          </div>
+        ))}
         <br />
         <h1 className="text-[25px] font-Poppins font-[600]">
-            What are the prerequisites for starting this course ?
-          </h1>
-          {courseData?.prerequisites.map((item:any,index:number)=>(
-               <div key={index} className="w-full flex 800px:items-center py-2">
-               <div className="w-[15px] mr-1">
-               <IoCheckmarkDoneOutline size={20} />
-               </div>
-               <p className="pl-2">{item.title}</p>
-             </div>
-          ))}
+          What are the prerequisites for starting this course ?
+        </h1>
+        {courseData?.prerequisites.map((item: any, index: number) => (
+          <div key={index} className="w-full flex 800px:items-center py-2">
+            <div className="w-[15px] mr-1">
+              <IoCheckmarkDoneOutline size={20} />
+            </div>
+            <p className="pl-2">{item.title}</p>
+          </div>
+        ))}
 
         {/* course description */}
         <div className="w-full">
@@ -132,7 +144,7 @@ const CoursePreview:FC<Props> = ({active,setActive,courseData,handleCourseCreate
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CoursePreview
+export default CoursePreview;

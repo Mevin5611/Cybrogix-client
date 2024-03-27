@@ -10,7 +10,7 @@ type Props = {
 
 };
 
-const page:FC<Props> = (props) => {
+const Page:FC<Props> = (props) => {
   
   const [open, setOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(0);
@@ -18,7 +18,7 @@ const page:FC<Props> = (props) => {
   const {user} = useSelector((state:any)=> state.auth)
 
   return (
-    <div>
+    <>
       <Protected>
       <Heading
         title={`${user.name} Profile`}
@@ -36,8 +36,8 @@ const page:FC<Props> = (props) => {
       user={user}
       />
       </Protected>
-    </div>
+    </>
   );
 };
 
-export default page;
+export default Page;

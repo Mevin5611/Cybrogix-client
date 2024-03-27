@@ -31,18 +31,15 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, serOpenSidebar] = useState(false);
-  const { data:user ,isLoading,refetch} = useLoadUserQuery(undefined,{})
+  const { data: user, isLoading, refetch } = useLoadUserQuery(undefined, {});
   const { data } = useSession();
   const [logout, setLogout] = useState(false);
   const {} = useLogoutQuery(undefined, { skip: !logout ? true : false });
 
   const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
 
-  
-  
   useEffect(() => {
-    if(!isLoading){
-
+    if (!isLoading) {
       if (!user) {
         if (data) {
           socialAuth({
@@ -50,10 +47,10 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
             name: data.user?.name,
             avatar: data.user?.image,
           });
-          refetch()
+          refetch();
         }
       }
-      if (data === null ) {
+      if (data === null) {
         if (isSuccess) {
           toast.success("Login Successfully");
         }

@@ -1,30 +1,28 @@
 "use client";
 import React, { FC, useState } from "react";
-import SidebarProfile from './SidebarProfile'
+import SidebarProfile from "./SidebarProfile";
 import { useLogoutQuery } from "../../../redux/features/auth/authApi";
 import { signOut } from "next-auth/react";
-import Profileinfo from './Profileinfo'
-import ChangePassword from './ChangePassword'
-import EnrolledCourse from './EnrolledCourse'
-import Certificates from './Certificates'
-
+import Profileinfo from "./Profileinfo";
+import ChangePassword from "./ChangePassword";
+import EnrolledCourse from "./EnrolledCourse";
+import Certificates from "./Certificates";
 
 type Props = {
-    user:any
+  user: any;
 };
 
-const Profile: FC<Props> = ({user}) => {
+const Profile: FC<Props> = ({ user }) => {
   const [scroll, setScroll] = useState(false);
-  const [active,setActive] = useState(1)
-  const [avatar,setAvatar] = useState(null)
-  const [logout,setLogout] =useState(false)
-  const {} = useLogoutQuery(undefined,{skip:!logout ? true : false})
+  const [active, setActive] = useState(1);
+  const [avatar, setAvatar] = useState(null);
+  const [logout, setLogout] = useState(false);
+  const {} = useLogoutQuery(undefined, { skip: !logout ? true : false });
 
-const logoutHandler =async()=>{
-await signOut();
-setLogout(true);
-
-}
+  const logoutHandler = async () => {
+    await signOut();
+    setLogout(true);
+  };
 
   if (typeof window !== "undefined") {
     window.addEventListener("scroll ", () => {
@@ -44,41 +42,33 @@ setLogout(true);
         }left-[30px]`}
       >
         <SidebarProfile
-        user={user}
-        active={active}
-        avatar={avatar}
-        setActive={setActive}
-        logoutHandler={logoutHandler}
+          user={user}
+          active={active}
+          avatar={avatar}
+          setActive={setActive}
+          logoutHandler={logoutHandler}
         />
       </div>
-      {
-          active === 1 && (
-            <div className="w-full h-full bg-transparent mt-[80px]">
-              <Profileinfo user={user} avatar={avatar}/>
-            </div>
-          )
-        }
-      {
-          active === 2 && (
-            <div className="w-full h-full bg-transparent mt-[80px]">
-              <ChangePassword user={user}/>
-            </div>
-          )
-        }
-      {
-          active === 3 && (
-            <div className="w-full h-full bg-transparent mt-[80px]">
-              <EnrolledCourse user={user}/>
-            </div>
-          )
-        }
-      {
-          active === 4 && (
-            <div className="w-full h-full bg-transparent mt-[80px]">
-              <Certificates user={user}/>
-            </div>
-          )
-        }
+      {active === 1 && (
+        <div className="w-full h-full bg-transparent mt-[80px]">
+          <Profileinfo user={user} avatar={avatar} />
+        </div>
+      )}
+      {active === 2 && (
+        <div className="w-full h-full bg-transparent mt-[80px]">
+          <ChangePassword user={user} />
+        </div>
+      )}
+      {active === 3 && (
+        <div className="w-full h-full bg-transparent mt-[80px]">
+          <EnrolledCourse user={user} />
+        </div>
+      )}
+      {active === 4 && (
+        <div className="w-full h-full bg-transparent mt-[80px]">
+          <Certificates user={user} />
+        </div>
+      )}
     </div>
   );
 };

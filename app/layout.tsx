@@ -8,11 +8,11 @@ import { Providers } from "./provider";
 import { SessionProvider } from "next-auth/react";
 import React, { useEffect } from "react";
 import { useLoadUserQuery } from "../redux/features/api/apiSlice";
-import Loader from "./components/Loader/Loader"
-import socketIO from 'socket.io-client'
+import Loader from "./components/Loader/Loader";
+import socketIO from "socket.io-client";
 
 const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
-const socketId = socketIO(ENDPOINT,{transports:["websocket"]});
+const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -40,9 +40,7 @@ export default function RootLayout({
         <Providers>
           <SessionProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <Custom>
-              {children}
-              </Custom>
+              <Custom>{children}</Custom>
               <Toaster position="top-center" reverseOrder={false} />
             </ThemeProvider>
           </SessionProvider>
@@ -52,24 +50,12 @@ export default function RootLayout({
   );
 }
 
-const Custom:React.FC<{children:React.ReactNode}> = ({children}) =>{
-  const {isLoading}= useLoadUserQuery({})
+const Custom: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isLoading } = useLoadUserQuery({});
 
   useEffect(() => {
-   socketId.on("connection",()=>{})
-  }, [])
-  
-  return (
-    <>
-    {
-      isLoading ? 
-        <Loader/>
-       : 
-        <>
-        {children}
-        </>
-      
-    }
-    </>
-  )
-}
+    socketId.on("connection", () => {});
+  }, []);
+
+  return <>{isLoading ? <Loader /> : <>{children}</>}</>;
+};

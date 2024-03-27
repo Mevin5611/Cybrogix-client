@@ -5,25 +5,25 @@ import CourseOption from "./CourseOption";
 import CourseData from "./CourseData";
 import CourseContent from "./CourseContent";
 import CoursePreview from "./CoursePreview";
-import {useEditCourseMutation, useGetAllCourseaQuery } from "@/redux/features/courses/coursesApi";
+import {
+  useEditCourseMutation,
+  useGetAllCourseaQuery,
+} from "@/redux/features/courses/coursesApi";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
 
 type Props = {
-  id:string
+  id: string;
 };
 
-const EditCourse: FC<Props> = ({id}) => {
-  
-  const [EditCourse,{isSuccess,error}] = useEditCourseMutation({})
-  const {data} = useGetAllCourseaQuery({})
-  const editCourseData =data && data.courses.find((i:any)=> i._id === id)
-  
-  
+const EditCourse: FC<Props> = ({ id }) => {
+  const [EditCourse, { isSuccess, error }] = useEditCourseMutation({});
+  const { data } = useGetAllCourseaQuery({});
+  const editCourseData = data && data.courses.find((i: any) => i._id === id);
+
   const [active, setActive] = useState(0);
   useEffect(() => {
-    if(editCourseData){
-
+    if (editCourseData) {
       setCourseInfo({
         name: editCourseData.name,
         description: editCourseData.description,
@@ -34,17 +34,17 @@ const EditCourse: FC<Props> = ({id}) => {
         demoUrl: editCourseData.demoUrl,
         thumbnail: editCourseData.thumbnail,
       });
-    
+
       setBenefits([...editCourseData.benefits]);
       setPrerequisites([...editCourseData.prerequisites]);
       setCourseContentData([...editCourseData.courseData]);
     }
-  }, [editCourseData])
-  
+  }, [editCourseData]);
+
   const [courseInfo, setCourseInfo] = useState({
     name: "",
     description: "",
-    categories:"",
+    categories: "",
     price: "",
     estimatedPrice: "",
     tags: "",
@@ -97,7 +97,7 @@ const EditCourse: FC<Props> = ({id}) => {
     const data = {
       name: courseInfo.name,
       description: courseInfo.description,
-      categories:courseInfo.categories,
+      categories: courseInfo.categories,
       price: courseInfo.price,
       estimatedPrice: courseInfo.estimatedPrice,
       tags: courseInfo.tags,
@@ -112,8 +112,8 @@ const EditCourse: FC<Props> = ({id}) => {
     setCourseData(data);
   };
   useEffect(() => {
-    if(isSuccess){
-      toast.success("Course Updated Successfully")
+    if (isSuccess) {
+      toast.success("Course Updated Successfully");
       redirect("/admin/courses");
     }
 
@@ -122,7 +122,6 @@ const EditCourse: FC<Props> = ({id}) => {
         const errmsg = error as any; // Extract error message
         toast.error(errmsg.data.message); // Render the error message
         console.log(errmsg);
-        
       } else {
         toast.error("An error occurred while updating the course."); // Fallback error message
       }
@@ -132,11 +131,10 @@ const EditCourse: FC<Props> = ({id}) => {
   const handleCourseCreate = async (e: any) => {
     const data = courseData;
     console.log(data);
-    
-    await EditCourse({id:editCourseData._id,data})
-    
+
+    await EditCourse({ id: editCourseData._id, data });
   };
-  
+
   return (
     <div className="w-full flex min-h-screen">
       <div className="w-[80%]">

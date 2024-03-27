@@ -8,12 +8,12 @@ import DashboardHero from "../components/admin/dashboard/DashboardHero";
 
 type Props = {};
 
-const page: FC<Props> = () => {
-  const [select, setSelect] = useState<number>();
+const Page: FC<Props> = () => {
+  const [select, setSelect] = useState<number>(0);
 
   const { user } = useSelector((state: any) => state.auth);
   return (
-    <div>
+    <>
       <AdminProtected>
         <Heading
           title={`Admin ${user.name}-Dashboard`}
@@ -29,8 +29,8 @@ const page: FC<Props> = () => {
           </div>
         </div>
       </AdminProtected>
-    </div>
+    </>
   );
 };
 
-export default page;
+export default Page;

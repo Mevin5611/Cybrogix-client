@@ -3,17 +3,21 @@ import CourseCard from "../course/CourseCard";
 import { useGetAllCoursesForUsersQuery } from "@/redux/features/courses/coursesApi";
 
 type Props = {
-    user:any
+  user: any;
 };
 
-const EnrolledCourse = ({user}: Props) => {
+const EnrolledCourse = ({ user }: Props) => {
   const [courseData, setCourseData] = useState([]);
   const { data } = useGetAllCoursesForUsersQuery({});
 
   useEffect(() => {
     if (data) {
-        const filteredCourses = user.courses.map((usercourses:any)=> data.courses.find((course:any)=> course._id === usercourses._id)).filter((course:any)=> course !== undefined)
-            setCourseData(filteredCourses);
+      const filteredCourses = user.courses
+        .map((usercourses: any) =>
+          data.courses.find((course: any) => course._id === usercourses._id)
+        )
+        .filter((course: any) => course !== undefined);
+      setCourseData(filteredCourses);
     }
   }, [data]);
   console.log(data);
@@ -28,7 +32,6 @@ const EnrolledCourse = ({user}: Props) => {
             {" "}
             courses
           </span>
-          
         </h1>
         <br />
         <div className="grid  grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-3 lg:gap-[30px] 1500px:grid-cols-3 1500px:gap-[35px] mb-12 border-0">

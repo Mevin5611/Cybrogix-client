@@ -29,10 +29,10 @@ const Page: FC<props> = () => {
         route={route}
       />
       <Hero />
-      <Courses/>
-      <Reviews/>
-      <Faq/>
-      <Footer/>
+      <Courses />
+      <Reviews />
+      <Faq />
+      <Footer />
     </>
   );
 };
