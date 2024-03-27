@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import jsPDF from "jspdf";
 import { FaFilePdf } from "react-icons/fa6";
 
+
+
 type Props = {
   item: any;
   key: number;
@@ -12,13 +14,20 @@ const Certificate = ({ item, key }: Props) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleDownload = () => {
-    const pdf = new jsPDF("landscape");
+    const pdf = new jsPDF('landscape'); // Create a new instance of jsPDF with landscape orientation
 
-    // Add the canvas image to the PDF document
-    pdf.addImage(item.url, "JPG", 0, 0, 298, 210);
+    // Capture the image 
+    
+        const imageData = item.url
 
-    // Save the PDF file
-    pdf.save("certificate.pdf");
+        // Add the canvas image to the PDF document
+        pdf.addImage(imageData, 'JPEG', 0, 0,298,210); // Default size and landscape orientation will be used
+
+        // Save the PDF file
+        pdf.save(`${item.course} certificate.pdf`);
+
+        setModalOpen(false)
+   
   };
 
   return (
@@ -37,11 +46,12 @@ const Certificate = ({ item, key }: Props) => {
       </div>
       {modalOpen && (
         <div
-          onClick={() => setModalOpen(false)}
+          /* onClick={() => setModalOpen(false)} */
           className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center  bg-[#000] w-full h-full bg-opacity-50"
         >
           <div className="">
             <Image
+            id="certificate-image"
               src={item?.url}
               width={800}
               height={1200}
