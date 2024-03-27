@@ -368,8 +368,8 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
       )}
 
       {modalOpen && (
-        <div className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center  bg-[#000000] w-full h-full bg-opacity-55 ">
-          <div className="w-[1000px] h-[500px] bg-[#202020]  rounded-md">
+        <div className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center  bg-[#000000] w-full h-screen bg-opacity-55 overflow-scroll no-scrollbar">
+          <div className="w-[1000px]  bg-[#202020]  rounded-md">
             <div className="w-full flex justify-end pt-3 pr-3">
               <RxCross1 size={25} onClick={() => setModalOpen(false)} />
             </div>
