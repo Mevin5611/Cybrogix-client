@@ -1,3 +1,4 @@
+
 import { useGetAllNotificationQuery, useUpdateNotificationStatusMutation } from "@/redux/features/notification/notificationApi";
 import { ThemeSwitcher } from "../../../utils/ThemeSwitcher";
 import React, { useEffect, useState } from "react";
@@ -12,15 +13,25 @@ type Props = {
 };
 
 const DashboardHeader = (props: Props) => {
+  
     const [Open, setOpen] = useState(false);
     const {data,refetch} = useGetAllNotificationQuery(undefined,{refetchOnMountOrArgChange:true})
     const [updateNotificationStatus,{isSuccess}] = useUpdateNotificationStatusMutation()
     const [notification,setNotification] = useState<any>([])
-    const [audio] = useState(
-      new Audio("https://res.cloudinary.com/dzrvgsiey/video/upload/v1711179510/audio/ow5no9nx8h6dahwxkl5o.mp3")
-    )
+    const [audio, setAudio] = useState<HTMLAudioElement| null>(null);
+
+useEffect(() => {
+  // Check if window is defined (i.e., if the code is running in the browser)
+  if (typeof window !== 'undefined') {
+    // Create the Audio instance
+    const audioElement = new Audio("https://res.cloudinary.com/dzrvgsiey/video/upload/v1711179510/audio/ow5no9nx8h6dahwxkl5o.mp3");
+    setAudio(audioElement);
+  }
+}, []);
     const playerNotificationSound = ()=>{
-      audio.play()
+      if(audio){
+        audio.play()
+      }
     }
     console.log("notification",data);
     
@@ -31,7 +42,9 @@ const DashboardHeader = (props: Props) => {
       if(isSuccess){
         refetch()
       } 
-      audio.load()
+      if(audio){
+        audio.load()
+      }
     }, [data,isSuccess])
     
     useEffect(() => {

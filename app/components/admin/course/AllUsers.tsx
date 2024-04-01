@@ -29,7 +29,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
   const [addteam, setAddTeam] = useState(false);
   const [id, setId] = React.useState("");
   const [course, setCourse] = React.useState("");
-  const [certificate, setcCertificate] = useState();
+  const [certificate, setcCertificate] = useState<string>("");
   const [draging, setDraging] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const { isLoading, data, error, refetch } = useGetAllUsersQuery(
@@ -48,7 +48,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
     role: "",
   });
 
-  const columns = [
+  const columns:any = [
     {
       field: "id",
       headerName: "ID",
@@ -176,8 +176,8 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
       setModalOpen(false);
       refetch();
       toast.success("certificate upload successfully");
-      setcCertificate("");
-      setCourse("");
+      setcCertificate(" ");
+      setCourse(" ");
     }
   }, [isSuccess, certifySuccess]);
 
@@ -192,7 +192,11 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
       const reader = new FileReader();
 
       reader.onload = () => {
-        setcCertificate(reader.result);
+        if(typeof reader.result === 'string'){
+
+          setcCertificate(reader.result);
+        }
+       
       };
       reader.readAsDataURL(file);
     }

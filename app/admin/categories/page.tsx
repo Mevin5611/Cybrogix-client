@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from "react";
 import AdminSidebar from "../../components/admin/sidebar/AdminSidebar";
 import DashboardHeader from "../../components/admin/dashboard/DashboardHeader";

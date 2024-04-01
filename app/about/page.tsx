@@ -37,7 +37,7 @@ const Page = (props: Props) => {
         <div className="w-[95%] 800px:w-[90%] p-1 m-auto">
           <p className="font-Poppins text-start text-[20px] mt-10 text-black dark:text-white">
             Welcome to Cybrogix, your premier destination for innovative and
-            effective learning management solutions. At Cybrogix, we're
+            effective learning management solutions. At Cybrogix, we&apos;re
             passionate about revolutionizing the way education is delivered and
             received in the digital age. Our platform is designed to empower
             learners, educators, and administrators alike, providing a dynamic
@@ -62,7 +62,7 @@ const Page = (props: Props) => {
           <p className="font-Poppins text-start text-[20px] mt-4 text-black dark:text-white">
             Cybrogix offers a comprehensive suite of features and tools tailored
             to meet the diverse needs of modern learners and educators. Whether
-            you're a student, teacher, or administrator, you'll find everything
+            you&apos;re a student, teacher, or administrator, you&apos;ll find everything
             you need to succeed on our platform:
           </p>
           <ul className="mt-5 ms-10 text-black dark:text-white">
@@ -98,7 +98,7 @@ const Page = (props: Props) => {
               :
               <p className="text-black dark:text-gray-300">
                 Adaptive learning algorithms that tailor content to each
-                learner's unique needs, preferences, and learning style.
+                learner&apos;s unique needs, preferences, and learning style.
               </p>
             </li>
             <li className=" mb-3  font-Poppins font-medium text-[18px]">
@@ -146,7 +146,7 @@ const Page = (props: Props) => {
             <li className="font-Poppins font-medium text-[18px] mb-3  ">
               <span className="!font-bold !text-[18px] "> Innovation </span>:
               <p className="text-black dark:text-gray-300">
-                We're constantly pushing the boundaries of educational
+                We&apos;re constantly pushing the boundaries of educational
                 technology, leveraging the latest advancements in AI, machine
                 learning, and data analytics to enhance the learning experience.
               </p>
@@ -185,7 +185,7 @@ const Page = (props: Props) => {
           <p className="font-Poppins text-start text-[20px] mt-4 text-black dark:text-white">
             Ready to experience the future of learning with Cybrogix? Sign up
             for a free trial today and join thousands of learners and educators
-            who are already transforming education with us. Together, let's
+            who are already transforming education with us. Together, let&apos;s
             unlock the full potential of every learner and build a brighter
             future for generations to come.
           </p>

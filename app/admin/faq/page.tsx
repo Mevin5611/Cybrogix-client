@@ -7,7 +7,7 @@ import Editfaq from "../../components/admin/layouts/Editfaq";
 
 type Props = {};
 
-function Page({ params }: any) {
+function page({ params }: any) {
   const id = params.id;
   return (
     <>
@@ -29,4 +29,4 @@ function Page({ params }: any) {
   );
 }
 
-export default Page;
+export default page;

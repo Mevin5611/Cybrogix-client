@@ -17,7 +17,7 @@ type Props = {
 const CourseDetailsPage: FC<Props> = ({ id }) => {
   const [open, setOpen] = useState(false);
   const [route, setRoute] = useState("Login");
-  const [course, setCourse] = useState();
+  const [course, setCourse] = useState<any>();
   const { data, isLoading } = useGetCourseDetailsQuery(id);
   const { data: config } = useSendStripeKeyQuery({});
   const [stripePromise, setStripePromise] = useState<any>(null);
@@ -74,6 +74,7 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
                   setRoute={setRoute}
                   stripePromise={stripePromise}
                   clientSecret={clientSecret}
+                  setOpen={setOpen}
                 />
               )}
             </div>

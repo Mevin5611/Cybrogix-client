@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from "react";
 import AdminSidebar from "../../components/admin/sidebar/AdminSidebar";
 import DashboardHeader from "../../components/admin/dashboard/DashboardHeader";
@@ -7,8 +7,8 @@ import CourseAnalytics from "../../components/admin/analytics/CourseAnalytics";
 
 type Props = {};
 
-function Page({ params }: any) {
-  const id = params.id;
+function page(Props: any) {
+  
   return (
     <>
       <Heading
@@ -22,11 +22,11 @@ function Page({ params }: any) {
         </div>
         <div className="w-[85%]">
           <DashboardHeader />
-          <CourseAnalytics />
+          <CourseAnalytics  />
         </div>
       </div>
     </>
   );
 }
 
-export default Page;
+export default page;

@@ -21,9 +21,10 @@ const CourseContentList: FC<Props> = ({
   );
   console.log(visibleSections);
 
-  const videoSections: string[] = [
-    ...new Set<string>(data?.map((item: any) => item.videoSection)),
-  ];
+  const videoSections: string[] = Array.from(
+    new Set<string>(data?.map((item: any) => item.videoSection))
+  );
+
   console.log(videoSections);
   let totalCount: number = 0;
 

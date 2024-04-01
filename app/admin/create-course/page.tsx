@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from "react";
 import AdminSidebar from "../../../app/components/admin/sidebar/AdminSidebar";
 import DashboardHeader from "../../components/admin/dashboard/DashboardHeader";
@@ -7,7 +7,7 @@ import CreateCourse from "../../components/admin/course/CreateCourse";
 
 type Props = {};
 
-function Page({}: Props) {
+function page({}: Props) {
   return (
     <>
       <Heading
@@ -28,4 +28,4 @@ function Page({}: Props) {
   );
 }
 
-export default Page;
+export default page;

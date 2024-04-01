@@ -22,7 +22,7 @@ import { useLogoutQuery } from "@/redux/features/auth/authApi";
 
 type Props = {
   select?: number;
-  setSelect?: (select: number) => void;
+  setSelect?: (select: number ) => void ;
   
 };
 
@@ -70,7 +70,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
           >
             <div>
               <Image
-                src={user.avatar.url}
+                src={user && user.avatar && user.avatar.url}
                 alt="img not found"
                 height={90}
                 width={90}
@@ -86,7 +86,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
           <div className={`${!Collapse && "pl-8"} mt-5`}>
             <Link
               href={"/admin"}
-              onClick={() => setSelect(1)}
+              onClick={() =>setSelect && setSelect(1)}
               className={`${
                 select === 1 && "text-blue-300"
               } flex gap-x-5 items-center  cursor-pointer hover:text-blue-600 duration-200 p-1 rounded-sm`}
@@ -109,7 +109,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
 
             <Link href={"admin/users"}>
               <div
-                onClick={() => setSelect(2)}
+                onClick={() =>setSelect && setSelect(2)}
                 className={`${
                   select === 2 && "text-blue-300"
                 } flex gap-x-5 items-center  cursor-pointer hover:text-blue-600 duration-200 p-1 rounded-sm`}
@@ -125,7 +125,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
 
             <Link
               href={"/admin/invoices"}
-              onClick={() => setSelect(3)}
+              onClick={() =>setSelect && setSelect(3)}
               className={`${
                 select === 3 && "text-blue-300"
               } flex gap-x-5 items-center  cursor-pointer hover:text-blue-600 duration-200 p-1 mt-2 rounded-sm`}
@@ -146,7 +146,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
 
             <Link
               href={"admin/create-course"}
-              onClick={() => setSelect(4)}
+              onClick={() =>setSelect && setSelect(4)}
               className={`${
                 select === 4 && "text-blue-300"
               } flex gap-x-5 items-center  cursor-pointer hover:text-blue-600 duration-200 p-1 rounded-sm`}
@@ -159,7 +159,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
 
             <Link href={"admin/courses"}>
               <div
-                onClick={() => setSelect(5)}
+                onClick={() =>setSelect && setSelect(5)}
                 className={`${
                   select === 5 && "text-blue-300"
                 } flex gap-x-5 items-center  cursor-pointer hover:text-blue-600 duration-200 p-1 mt-2 rounded-sm`}
@@ -183,7 +183,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
 
             <Link
               href={"/admin/hero"}
-              onClick={() => setSelect(6)}
+              onClick={() =>setSelect && setSelect(6)}
               className={`${
                 select === 6 && "text-blue-300"
               } flex gap-x-5 items-center  cursor-pointer hover:text-blue-600 duration-200 p-1 rounded-sm`}
@@ -196,7 +196,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
 
             <Link
               href={"/admin/faq"}
-              onClick={() => setSelect(7)}
+              onClick={() =>setSelect && setSelect(7)}
               className={`${
                 select === 7 && "text-blue-300"
               } flex gap-x-5 items-center  cursor-pointer hover:text-blue-600 duration-200 p-1 mt-2 rounded-sm`}
@@ -209,7 +209,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
 
             <Link
               href={"/admin/categories"}
-              onClick={() => setSelect(8)}
+              onClick={() =>setSelect && setSelect(8)}
               className={`${
                 select === 8 && "text-blue-300"
               } flex gap-x-5 items-center  cursor-pointer hover:text-blue-600 duration-200 p-1 mt-2 rounded-sm`}
@@ -230,7 +230,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
 
             <Link
               href={"/admin/team"}
-              onClick={() => setSelect(9)}
+              onClick={() =>setSelect && setSelect(9)}
               className={`${
                 select === 9 && "text-blue-300"
               } flex gap-x-5 items-center  cursor-pointer hover:text-blue-600 duration-200 p-1 rounded-sm`}
@@ -251,7 +251,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
 
             <Link
               href={"/admin/course-analytics"}
-              onClick={() => setSelect(10)}
+              onClick={() =>setSelect && setSelect(10)}
               className={`${
                 select === 10 && "text-blue-300"
               } flex gap-x-5 items-center  cursor-pointer hover:text-blue-600 duration-200 p-1 rounded-sm`}
@@ -264,7 +264,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
 
             <Link
               href={"/admin/order-analytics"}
-              onClick={() => setSelect(11)}
+              onClick={() =>setSelect && setSelect(11)}
               className={`${
                 select === 11 && "text-blue-300"
               } flex gap-x-5 items-center  cursor-pointer hover:text-blue-600 duration-200 p-1 mt-2 rounded-sm`}
@@ -277,7 +277,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
 
             <Link
               href={"/admin/user-analytics"}
-              onClick={() => setSelect(12)}
+              onClick={() =>setSelect && setSelect(12)}
               className={`${
                 select === 12 && "text-blue-300"
               } flex gap-x-5 items-center  cursor-pointer hover:text-blue-600 duration-200 p-1 mt-2 rounded-sm`}

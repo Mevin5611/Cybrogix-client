@@ -68,7 +68,7 @@ const Page = (props: Props) => {
               Intellectual Property: All intellectual property rights in
               Cybrogix, including but not limited to copyrights, trademarks, and
               trade secrets, are owned by Cybrogix or its licensors. You may not
-              use any of Cybrogix's intellectual property without prior written
+              use any of Cybrogix&apos;s intellectual property without prior written
               permission.
             </li>
             <li className="font-Poppins font-medium text-[18px] mb-3 list-decimal">

@@ -5,7 +5,7 @@ import { useGetAllCoursesForUsersQuery } from "@/redux/features/courses/coursesA
 type Props = {};
 
 const Courses = (props: Props) => {
-  const [courseData, setCourseData] = useState();
+  const [courseData, setCourseData] = useState<any>();
   const { data } = useGetAllCoursesForUsersQuery({});
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Courses = (props: Props) => {
         <br />
         <div className="grid  grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-3 lg:gap-[30px] 1500px:grid-cols-4 1500px:gap-[35px] mb-12 border-0">
           {courseData &&
-            courseData.map((item: any, index: number) => (
+            courseData?.map((item: any, index: number) => (
               <CourseCard key={index} course={item} />
             ))}
         </div>

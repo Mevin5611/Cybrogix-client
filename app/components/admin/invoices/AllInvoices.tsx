@@ -59,7 +59,7 @@ const AllInvoices:FC<Props> = ({isDashBoard}) => {
   
   
 
-  const colums = [
+  const colums:any = [
     {
       field: "id",
       headerName: "ID",
@@ -99,7 +99,7 @@ const AllInvoices:FC<Props> = ({isDashBoard}) => {
       },
     },
   ];
-  const rows = [
+  const rows:any = [
     
   ];
 

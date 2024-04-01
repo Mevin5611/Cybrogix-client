@@ -5,7 +5,7 @@ import { HiMinus, HiPlus } from "react-icons/hi";
 type Props = {};
 
 const Faq = (props: Props) => {
-  const [faqData, setFaqData] = useState();
+  const [faqData, setFaqData] = useState<any>();
   const { data } = useGetHeroDataQuery("FAQ", {});
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const Faq = (props: Props) => {
   }, [data]);
   console.log(faqData);
   const toggleHandle = (id: any) => {
-    setFaqData((pre) =>
+    setFaqData((pre:any) =>
       pre?.map((faq: any) =>
         faq._id === id ? { ...faq, active: !faq.active } : faq
       )
