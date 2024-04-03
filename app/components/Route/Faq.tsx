@@ -22,7 +22,7 @@ const Faq = (props: Props) => {
     );
   };
   return (
-    <div className="w-[90%] m-auto">
+    <div className="w-[90%] md:m-auto m-5">
       <br />
       <br />
       <h1 className="text-center font-Poppins text-[25px] leading-[35px] sm:text-3xl dark:text-white text-black 800px:leading-[60px] font-[700] tracking-tight">

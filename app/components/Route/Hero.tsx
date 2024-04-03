@@ -36,10 +36,10 @@ const Hero: FC<Props> = ({}) => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="w-full min-h-screen p-5 gap-x-10 1000px:flex items-center dark:bg-[#000000] bg-white">
-          <div className="w-[50%]">
-            <div className=" w-[40vh] h-[40vh] 300px:w-[40vh] 300px:h-[40vh] 400px:w-[50vh]  400px:h-[50vh] 800px:h-[80vh] 800px:w-[80vh] hero_animation rounded-full ml-10 flex justify-center items-center">
-              <div className="z-[10] ">
+        <div className="w-full min-h-screen gap-x-10 1000px:flex items-center dark:bg-[#000000] bg-white">
+          <div className="md:w-[50%] w-full flex justify-center">
+            <div className=" w-[40vh] h-[40vh]  md:h-[80vh] md:w-[80vh] hero_animation rounded-full  flex justify-center items-center mt-5">
+              <div className="z-[10]">
                 <img
                   alt="img not found"
                   src={
@@ -51,7 +51,7 @@ const Hero: FC<Props> = ({}) => {
             </div>
           </div>
 
-          <div className="1000px:w-[50%]  ml-10 flex flex-col items-center mt-5">
+          <div className="1000px:w-[50%] m-5 md:ml-10 flex flex-col items-center mt-5">
             <h2 className=" dark:text-white text-[#000000c7] text-[30px] 1000px:text-[60px] font-Josefin font-[500] 1000px:leading-[75px]">
               {bannerData
                 ? bannerData?.layout?.banner?.title
@@ -84,17 +84,17 @@ const Hero: FC<Props> = ({}) => {
             <div className="w-full flex items-center gap-x-3">
               <div className=" flex  ">
                 <Image
-                  className="w-[6vh] h-[6vh] rounded-full border-[2px] border-[white]   "
+                  className="md:w-[6vh] md:h-[6vh] w-[4vh] h-[4vh] rounded-full border-[2px] border-[white]   "
                   src={img}
                   alt="img not found"
                 />
                 <Image
-                  className="w-[6vh] h-[6vh] rounded-full border-[2px] border-[white] ml-[-20px]  "
+                  className="md:w-[6vh] md:h-[6vh] w-[4vh] h-[4vh] rounded-full border-[2px] border-[white] ml-[-20px]  "
                   src={img1}
                   alt="img not found"
                 />
                 <Image
-                  className="w-[6vh] h-[6vh] rounded-full border-[2px] border-[white] ml-[-20px]  "
+                  className="md:w-[6vh] md:h-[6vh] w-[4vh] h-[4vh] rounded-full border-[2px] border-[white] ml-[-20px]  "
                   src={img2}
                   alt="img not found"
                 />

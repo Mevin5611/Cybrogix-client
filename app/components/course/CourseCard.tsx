@@ -16,7 +16,7 @@ const CourseCard: FC<Props> = ({ course, isProfile }) => {
         !isProfile ? `/courses/${course._id}` : `/course-access/${course._id}`
       }
     >
-      <div className=" w-full min-h-[35vh] dark:bg-slate-500 dark:bg-opacity-20 backdrop-blur border dark:border-[#ffffff1d] border-[#00000015] dark:shadow-[bg-slate-700] rounded-lg p-3 shadow-sm dark:shadow-inner">
+      <div className="m-5 md:m-0 w-full min-h-[35vh] dark:bg-slate-500 dark:bg-opacity-20 backdrop-blur border dark:border-[#ffffff1d] border-[#00000015] dark:shadow-[bg-slate-700] rounded-lg p-3 shadow-sm dark:shadow-inner">
         <Image
           src={course?.thumbnail?.url}
           alt="img not found"

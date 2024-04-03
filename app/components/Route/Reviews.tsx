@@ -66,14 +66,14 @@ const Reviews: FC<Props> = () => {
   return (
     <div className="w-full">
       <div className="flex w-[95%] 800px:w-[85%] m-auto flex-col items-center  800px:flex-row justify-center  800px:justify-between  ">
-        <div className="ps-40">
+        <div className=" ps-0 md:ps-40 m-10 md:m-0">
           <Image src={comment} alt="img not found" width={400} height={400} />
         </div>
 
         <div className=" 800px:w-[50%]">
-          <h1 className=" dark:text-white text-black font-Poppins font-[600] text-[30px]">
+          <h1 className=" dark:text-white text-black font-Poppins font-[600] text-[30px] m-5 text-center">
             {" "}
-            Our Students Are{" "}
+            Our Students Are{" "} <br/>
             <span className="text-gradient bg-gradient-to-r from-pink-400 via-purple-500 to-sky-400 bg-clip-text text-transparent font-[800]">
               Our Strength
             </span>
@@ -83,7 +83,7 @@ const Reviews: FC<Props> = () => {
             </span>
           </h1>
           <br />
-          <p className="font-Poppins dark:text-white text-black">
+          <p className="font-Poppins dark:text-white text-black m-5 text-center md:text-start">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
             Reprehenderit quia maxime, earum ipsum, facilis quaerat dolores
             nobis cupiditate distinctio saepe est alias unde animi! Cumque
@@ -93,20 +93,20 @@ const Reviews: FC<Props> = () => {
       </div>
       <br />
       <br />
-      <div className="flex w-[95%] m-auto flex-wrap justify-center gap-5">
+      <div className="flex w-[95%] md:m-auto flex-wrap justify-center md:gap-5 gap-3 ml-2 ">
         {Review.map((review, index) => (
           <div
-            className=" w-full h-max bg-violet-100 800px:w-[40%]  dark:bg-slate-500 dark:bg-opacity-[0.20] border border-[#00000028] dark:border-[#ffffff1d] backdrop-blur shadow-[bg-slate-700] rounded-lg p-3 shadow-inline "
+            className=" w-full h-max bg-slate-50 800px:w-[40%]  dark:bg-slate-500 dark:bg-opacity-[0.20] border border-[#00000028] dark:border-[#ffffff1d] backdrop-blur shadow-[bg-slate-700] rounded-lg p-3 shadow-inline md:m-0 m-5"
             key={index}
           >
-            <div className="flex justify-center w-full items-center 400px:justify-between  flex-col 400px:flex-row">
+            <div className="md:flex md:justify-center w-full items-center justify-between  md:flex-col ">
               <div className="flex gap-x-2">
                 <Image
                   src={review.avatar}
                   alt="img not found "
                   height={50}
                   width={50}
-                  className="w-[50px] h-[50px] rounded-full object-cover"
+                  className="md:w-[50px] md:h-[50px] w-[30px] h-[30px] rounded-full object-cover"
                 />
                 <div>
                   <h1 className=" dark:text-white text-black font-Poppins text-[18px]">
@@ -121,7 +121,6 @@ const Reviews: FC<Props> = () => {
             </div>
             <br />
             <p className=" dark:text-white text-black font-Poppins">
-              {" "}
               {review.comment}
             </p>
           </div>
