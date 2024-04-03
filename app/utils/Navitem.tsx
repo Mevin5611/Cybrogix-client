@@ -9,7 +9,7 @@ type Props = {
 export const navItemData = [
   {
     name: "Home",
-    url: "/home",
+    url: "/",
   },
   {
     name: "Category",
