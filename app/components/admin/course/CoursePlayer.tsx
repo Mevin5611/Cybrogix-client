@@ -14,7 +14,7 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title }) => {
 
   useEffect(() => {
     axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}getVideoCipherOTP`, {
+      .post('https://cybrogix-server.onrender.com/api/lms/getVideoCipherOTP', {
         videoId: videoUrl,
       })
       .then((res) => {
