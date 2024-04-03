@@ -99,7 +99,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
               <Navitem activeItem={activeItem} isMobile={false} />
               <ThemeSwitcher />
               {/*  only show in mobile screen */}
-              <div className="800px:hidden">
+              <div className="800px:hidden pr-2">
                 <HiOutlineMenuAlt3
                   size={25}
                   className="cursor-pointer dark:text-white text-black"
@@ -137,16 +137,22 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
           >
             <div className="w-[70%] fixed z-[99999999] h-screen bg-white dark:bg-slate-900 dark:bg-opacity-90 top-0 right-0">
               <Navitem activeItem={activeItem} isMobile={true} />
-              <HiOutlineUserCircle
+              {
+                !user && (
+                  <HiOutlineUserCircle
                 size={25}
                 className="cursor-pointer dark:text-white text-black ml-5 my-2"
                 onClick={() => setOpen(true)}
               />
+                )
+              }
               <br />
-              <br />
-              <p className="text-[16px] px-2 pl-5 text-black dark:text-white">
+             
+              <div className="flex items-end ">
+              <p className="text-[16px] px-2 pl-5 text-black dark:text-white ">
                 Copyright &copy; 2024 Cybrogix
               </p>
+              </div>
             </div>
           </div>
         )}

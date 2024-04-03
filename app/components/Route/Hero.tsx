@@ -45,7 +45,7 @@ const Hero: FC<Props> = ({}) => {
                   src={
                     bannerData ? bannerData?.layout?.banner?.image?.url : banner
                   }
-                  className="object-cover rounded-full z-[10]"
+                  className="w-[30vh] h-[30vh] md:h-[70vh] md:w-[70vh] object-cover rounded-full z-[10]"
                 />
               </div>
             </div>
