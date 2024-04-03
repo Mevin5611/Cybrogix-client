@@ -25,7 +25,7 @@ export const navItemData = [
   },
   {
     name: "FAQ",
-    url: "/faqhome",
+    url: "/Faqhome",
   },
 ];
 
