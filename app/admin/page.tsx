@@ -20,8 +20,8 @@ const Page: FC<Props> = () => {
           description="Elearning is the new method to study"
           keyword="Programming"
         />
-        <div className="flex ">
-          <div className="1500px:w-[16%] w-1/5">
+        <div className="flex w-full ">
+          <div className="w-[15%] ">
             <AdminSidebar select={select} setSelect={setSelect} />
           </div>
           <div className="w-[85%]">

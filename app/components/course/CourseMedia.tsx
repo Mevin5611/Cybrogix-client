@@ -210,21 +210,21 @@ const CourseMedia = ({
       />
       <div className="w-full flex items-center justify-between p-5 ">
         <div
-          className={`${styles.button} !min-h-[40px] py-[unset] ${
+          className={`${styles.button} !md:min-h-[40px] min-h-[30px] !md:w-[190px] w-[70px] py-[unset] ${
             activeVideo === 0 && "!cursor-no-drop opacity-[.8]"
-          } flex items-center !w-[190px]`}
+          } flex items-center `}
           onClick={() =>
             setActiveVideo(activeVideo === 0 ? 0 : activeVideo - 1)
           }
         >
-          <AiOutlineArrowLeft className="mr-2" /> Previous Lesson
+          <AiOutlineArrowLeft className="mr-2 text-xl md:text-base" />  <span className="hidden md:block">Previous Lesson</span>
         </div>
 
         <div
-          className={`${styles.button} !min-h-[40px] !w-[190px] py-[unset] ${
+          className={`${styles.button} !md:min-h-[40px] min-h-[30px] !md:w-[190px] w-[70px] py-[unset]  ${
             data?.content.length - 1 === activeVideo &&
             "!cursor-no-drop opacity-[.8]"
-          } flex items-center`}
+          } flex items-center `}
           onClick={() =>
             setActiveVideo(
               data && data?.content?.length - 1 === 0
@@ -233,7 +233,7 @@ const CourseMedia = ({
             )
           }
         >
-          Next Lesson <AiOutlineArrowRight className="mr-2" />
+           <span className="hidden md:block">Next Lesson</span> <AiOutlineArrowRight className="mr-2 text-xl md:text-base" />
         </div>
       </div>
       <h1 className="pt-2 text-[25px] font-[600] text-black dark:text-white font-Poppins">

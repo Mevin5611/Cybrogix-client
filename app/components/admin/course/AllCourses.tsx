@@ -111,6 +111,7 @@ const AllCourses = (props: Props) => {
         <Box>
           <Box
             height="80vh"
+            margin={2}
             sx={{
               "& .MuiDataGrid-root": {
                 border: "none",

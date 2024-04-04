@@ -28,8 +28,8 @@ const CourseContentMedia = ({ id, user }: Props) => {
             description="anything"
             keyword={data?.content[activeVideo]?.tags}
           />
-          <div className="w-full grid 800px:grid-cols-10">
-            <div className="col-span-7">
+          <div className="w-full md:grid md:grid-cols-10 ">
+            <div className="md:col-span-7">
               <CourseMedia
                 data={data}
                 id={id}

@@ -201,6 +201,11 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
       reader.readAsDataURL(file);
     }
   };
+  const handleclose =()=>{
+    setModalOpen(false)
+    setcCertificate(" ");
+      setCourse(" ");
+  }
 
   const handleSubmit = async () => {
     /* console.log({ certificates: certificate, course, userId: id }); */
@@ -228,7 +233,8 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
           )}
 
           <Box
-            height="80vh"
+            height="40vh"
+            margin={2}
             sx={{
               "& .MuiDataGrid-root": {
                 border: "none",
@@ -373,12 +379,12 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
 
       {modalOpen && (
         <div className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center  bg-[#000000] w-full h-screen bg-opacity-55 overflow-scroll no-scrollbar">
-          <div className="w-[1000px]  bg-[#202020]  rounded-md">
+          <div className="lg:w-[1000px] w-[360px] bg-[#202020]  rounded-md">
             <div className="w-full flex justify-end pt-3 pr-3">
-              <RxCross1 size={25} onClick={() => setModalOpen(false)} />
+              <RxCross1 size={25} onClick={handleclose} />
             </div>
-            <div className=" w-full h-full flex justify-center items-center">
-              <div className="w-[800px]  ">
+            <div className=" w-full h-full flex justify-center items-center p-3">
+              <div className="lg:w-[800px]  ">
                 <div>
                   <label htmlFor="">Course Name</label>
 
@@ -423,7 +429,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
                 <div className="w-full flex items-center justify-end">
                   <button
                     onClick={() => handleSubmit()}
-                    className={`${styles.button} !w-[250px]`}
+                    className={`${styles.button} !lg:w-[250px]`}
                   >
                     Submit
                   </button>

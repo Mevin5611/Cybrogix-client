@@ -121,7 +121,7 @@ const CourseContent: FC<Props> = ({
     }
   };
   return (
-    <div className="w-[80%] m-auto mt-24 p-3">
+    <div className="lg:w-[80%] m-auto mt-24 p-3">
       <form onSubmit={handleSubmit}>
         {courseContentData.map((item: any, index: number) => {
           const showSectionInput =
@@ -398,7 +398,7 @@ const CourseContent: FC<Props> = ({
         </div>
       </form>
       <br />
-      <div className="w-full flex justify-between items-center">
+      <div className="w-full flex justify-between items-center gap-10">
         <div
           className="w-full 800px:w-[100px] flex items-center justify-center h-[40px]  bg-blue-400 text-center text-white
     rounded mt-8 cursor-pointer"

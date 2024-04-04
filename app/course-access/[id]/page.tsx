@@ -44,7 +44,7 @@ const Page = ({ params }: Props) => {
             route={route}
           />
 
-          <div className="mt-10 ms-16">
+          <div className="mt-10 md:ms-16 ms-4">
             <CourseContentMedia id={id} user={data.user} />
           </div>
         </div>

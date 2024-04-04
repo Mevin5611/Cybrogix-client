@@ -73,7 +73,7 @@ useEffect(() => {
           </span>
         </div>
         {Open && (
-          <div className="w-[350px] min-h-[50vh] dark:bg-[#080e24] bg-white shadow-xl absolute top-16 z-10 rounded p-5  ">
+          <div className="w-[350px] min-h-[50vh] dark:bg-[#080e24] bg-white shadow-xl absolute top-16  rounded p-5  ">
             <h1 className="text-center text-[20px] font-Poppins text-black dark:text-white">
               Notification
             </h1>

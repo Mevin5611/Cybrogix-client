@@ -116,6 +116,7 @@ const Editfaq: FC<Props> = () => {
                     className={`${styles.input} border-none w-full`}
                   />
                   <MdDeleteOutline
+                  className="dark:text-white text-black"
                     size={25}
                     onClick={() => toggleDelete(faq._id)}
                   />
@@ -141,7 +142,7 @@ const Editfaq: FC<Props> = () => {
           </div>
         </div>
       ))}
-      <IoMdAddCircleOutline size={25} onClick={() => newFaqhandler()} />
+      <IoMdAddCircleOutline className="dark:text-white text-black" size={25} onClick={() => newFaqhandler()} />
       <div className="flex justify-end w-full ">
         <button
           onClick={
@@ -150,7 +151,7 @@ const Editfaq: FC<Props> = () => {
               ? () => null
               : handleSubmit
           }
-          className={`w-[150px] flex flex-row justify-center py-3 rounded-md  min-h-[45px] text-[16px] bg-gray-700 font-Poppins font-semibold dark:text-white text-black ${
+          className={`lg:w-[150px] w-[80px] flex flex-row justify-center py-3 rounded-md  min-h-[45px] text-[16px] bg-gray-700 font-Poppins font-semibold dark:text-white text-black ${
             areQuestionUnchanged(data?.layout.faq, question) ||
             isQuestionEmpty(question)
               ? "cursor-not-allowed"

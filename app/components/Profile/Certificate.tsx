@@ -46,11 +46,12 @@ const Certificate = ({ item, key }: Props) => {
       </div>
       {modalOpen && (
         <div
-          /* onClick={() => setModalOpen(false)} */
+          
           className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center  bg-[#000] w-full h-full bg-opacity-50"
         >
           <div className="">
             <Image
+            onClick={() => setModalOpen(false)}
             id="certificate-image"
               src={item?.url}
               width={800}

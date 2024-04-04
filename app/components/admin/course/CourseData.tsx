@@ -140,7 +140,7 @@ const CourseData: FC<Props> = ({
           size={25}
         />
       </div>
-      <div className="w-full flex justify-between items-center">
+      <div className="w-full flex justify-between items-center gap-10">
         <div
           className="w-full 800px:w-[100px] flex items-center justify-center h-[40px]  bg-blue-400 text-center text-white
         rounded mt-8 cursor-pointer"

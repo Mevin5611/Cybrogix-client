@@ -39,7 +39,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
   }
   return (
     <>
-      <Sidebar collapsed={Collapse} backgroundColor="#3d407d" width="230px">
+      <Sidebar collapsed={Collapse} backgroundColor="#3d407d" width="230px" className="z-50">
         <div
           className={`${
             Collapse && "w-[100px]"
@@ -51,7 +51,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
                 Collapse && "hidden"
               } "font-Poppins font-[600] text-[25px] cursor-pointer "`}
             >
-              Cybrogix
+              Cybrogix 
             </h1>
 
             <div onClick={() => setCollapse(!Collapse)}>
@@ -107,7 +107,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
             <hr className={`${Collapse && "hidden"}`} />
             <br className={`${Collapse && "hidden"}`} />
 
-            <Link href={"admin/users"}>
+            <Link href={"/admin/users"}>
               <div
                 onClick={() =>setSelect && setSelect(2)}
                 className={`${
@@ -145,7 +145,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
             <br className={`${Collapse && "hidden"}`} />
 
             <Link
-              href={"admin/create-course"}
+              href={"/admin/create-course"}
               onClick={() =>setSelect && setSelect(4)}
               className={`${
                 select === 4 && "text-blue-300"
@@ -157,7 +157,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
               </h1>
             </Link>
 
-            <Link href={"admin/courses"}>
+            <Link href={"/admin/courses"}>
               <div
                 onClick={() =>setSelect && setSelect(5)}
                 className={`${

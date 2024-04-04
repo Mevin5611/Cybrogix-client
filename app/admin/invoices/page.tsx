@@ -19,12 +19,12 @@ const Page = (props: Props) => {
           keyword="Programming"
         />
         <div className="flex h-[200vh]">
-          <div className="1500px:w-[15%] w-1/5">
+          <div className="w-[15%]">
             <AdminSidebar />
           </div>
           <div className="w-[85%]">
             <DashboardHeader />
-            <div className="m-10 ms-24">
+            <div className="lg:m-10 m-5 lg:ms-24">
               <AllInvoices />
             </div>
           </div>

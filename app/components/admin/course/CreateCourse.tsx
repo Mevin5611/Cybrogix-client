@@ -109,8 +109,8 @@ const CreateCourse: FC<Props> = () => {
   };
 
   return (
-    <div className="w-full flex min-h-screen">
-      <div className="w-[80%]">
+    <div className="w-full flex min-h-screen text-[15px] ">
+      <div className="lg:w-[80%] ">
         {active === 0 && (
           <CourseInformation
             courseInfo={courseInfo}
@@ -147,7 +147,7 @@ const CreateCourse: FC<Props> = () => {
           />
         )}
       </div>
-      <div className="w-[17%] mt-[100px] h-screen fixed z-[1] top-18 right-0 ">
+      <div className="hidden lg:block lg:w-[17%] mt-[100px] h-screen fixed z-[1] top-18 right-0 ">
         <CourseOption active={active} setActive={setActive} />
       </div>
     </div>

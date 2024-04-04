@@ -57,10 +57,10 @@ const EditHero: FC<Props> = () => {
   };
 
   return (
-    <div className="w-full min-h-screen p-5 gap-x-10 1000px:flex items-center dark:bg-[#000000] bg-white">
-      <div className="w-[50%]">
-        <div className=" w-[40vh] h-[40vh] 300px:w-[40vh] 300px:h-[40vh] 400px:w-[50vh]  400px:h-[50vh] 800px:h-[80vh] 800px:w-[80vh] hero_animation rounded-full ml-10 z-10 flex justify-center items-center">
-          <div className="z-[10] 1000px:mt-[-40px] ">
+    <div className="w-full min-h-screen p-5 lg:gap-x-10 1000px:flex items-center dark:bg-[#000000] bg-white">
+      <div className=" lg:w-[50%]">
+        <div className="h-[30vh] w-[30vh]  md:w-[40vh] md:h-[40vh] lg:w-[80vh] lg:h-[80vh] hero_animation rounded-full md:ml-10 ml-2 z-10 flex justify-center items-center">
+          <div className=" 1000px:mt-[-40px]  ">
             <input
               type="file"
               id="banner"
@@ -72,7 +72,7 @@ const EditHero: FC<Props> = () => {
               <img
                 alt="img not found"
                 src={image}
-                className="object-cover rounded-full z-[10]"
+                className="object-cover rounded-full w-[20vh] h-[20vh] md:w-[30vh] md:h-[30vh] lg:w-[70vh] lg:h-[70vh]"
               />
             </label>
           </div>
@@ -106,7 +106,7 @@ const EditHero: FC<Props> = () => {
         <div className="w-full flex justify-end gap-x-3">
           <button
             onClick={() => handleSubmit()}
-            className={`w-[150px] flex flex-row justify-center py-3 rounded-md cursor-pointer bg-green-700 min-h-[45px] text-[16px] font-Poppins font-semibold dark:text-white text-black`}
+            className={`lg:w-[150px] w-[80px] flex flex-row justify-center py-3 rounded-md cursor-pointer bg-green-700 min-h-[45px] text-[16px] font-Poppins font-semibold dark:text-white text-black`}
           >
             save
           </button>

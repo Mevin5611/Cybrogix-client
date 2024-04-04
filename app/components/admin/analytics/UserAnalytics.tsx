@@ -16,7 +16,7 @@ type Props = {
   DashBoard?: boolean;
 };
 
-const UserAnalytics = ({ DashBoard }: Props) => {
+const UserAnalytics= ({ DashBoard }: Props) => {
   const { data, isLoading, isError } = useGetUsersAnalyticsQuery({});
   console.log(data);
 
@@ -67,9 +67,9 @@ const UserAnalytics = ({ DashBoard }: Props) => {
             )}
             <div
               className={` w-full ${
-                DashBoard ? "h-[20vh] " : "h-screen pb-10"
+                DashBoard ? "h-[20vh] w-full" : "h-screen pb-10"
               } flex items-center justify-center`}
-            >
+             >
               <ResponsiveContainer
                 width={DashBoard ? "100%" : "90%"}
                 height={!DashBoard ? "50%" : "100%"}

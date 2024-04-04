@@ -17,14 +17,14 @@ const Page = (props: Props) => {
           description="Elearning is the new method to study"
           keyword="Programming"
         />
-        <div className="flex h-[200vh]">
-          <div className="1500px:w-[15%] w-1/5">
+        <div className="flex ">
+          <div className="w-[15%]">
             <AdminSidebar />
           </div>
           <div className="w-[85%]">
             <DashboardHeader />
 
-            <div className="m-10 ms-24">
+            <div className="lg:m-10 lg:ms-24 m-5 min-h-screen">
             <AllUsers  />
             </div>
           </div>

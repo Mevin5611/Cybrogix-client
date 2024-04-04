@@ -124,8 +124,9 @@ const AllInvoices:FC<Props> = ({isDashBoard}) => {
         isLoading? <Loader/>: */}
         <Box>
         <Box
-          height={isDashBoard? '40vh':'80vh'}
-          width={isDashBoard? '48vh':'100%'}
+          height={isDashBoard? '20vh':'80vh'}
+          width={isDashBoard? '20vh':'100%'}
+          
           sx={{
             "& .MuiDataGrid-root": {
               border: "none",
@@ -177,7 +178,7 @@ const AllInvoices:FC<Props> = ({isDashBoard}) => {
             },
           }}
         >
-          <DataGrid checkboxSelection rows={rows} columns={colums} />
+          <DataGrid checkboxSelection rows={rows} columns={colums} className="w-[100%]"/>
         </Box>
      
       </Box>

@@ -38,7 +38,7 @@ const OrderAnalytics = ({ DashBoard }: Props) => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="min-h-screen">
+        <div className={`${!DashBoard && "min-h-screen"}`}>
           <div>
             <h1 className="text-start text-[20px] my-[20px] pb-10 font-Poppins ps-10 dark:text-white text-black">
               Order analytics

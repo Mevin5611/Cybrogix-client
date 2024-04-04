@@ -32,7 +32,7 @@ const CoursePreview: FC<Props> = ({
     handleCourseCreate();
   };
   return (
-    <div className="w-[90%] m-auto py-5 mb-5">
+    <div className="w-[90%] m-auto py-5 mb-5 dark:text-white text-black">
       <div className="w-full relative">
         <div className="w-full mt-10">
           <CoursePlayer
@@ -124,7 +124,7 @@ const CoursePreview: FC<Props> = ({
         </div>
       </div>
       <br />
-      <div className="w-full flex justify-between items-center">
+      <div className="w-full flex justify-between items-center gap-10">
         <div
           className="w-full 800px:w-[100px] flex items-center justify-center h-[40px]  bg-blue-400 text-center text-white
         rounded mt-8 cursor-pointer"

@@ -97,31 +97,35 @@ const DashboardWidget: FC<Props> = ({ open }) => {
   }, [isLoading, userLoading, data, userData]);
 
   return (
-    <div className="mt-[30px]">
-      <div className="grid grid-cols-[75%,25%]">
+    <div className="lg:mt-[30px]">
+      <div className="lg:grid grid-cols-[75%,25%]">
         <div className="p-8">
           <UserAnalytics DashBoard={true} />
         </div>
 
-        <div className="pt-[20px] pr-8">
-          <div className="w-full dark:bg-[#111C43] rounded-sm shadow p-2">
+        <div className="lg:pt-[20px] lg:pr-8 flex lg:flex-none justify-between items-center gap-4 m-4 ps-4">
+          <div className="w-[50%] lg:w-full dark:bg-[#111C43] rounded-sm shadow p-2">
+          <h1 className=" py-2 font-Poppins dark:text-[#45CBA0] text-black lg:text-[20px] text-[15px]">
+                  Sales Obtained
+                </h1>
             <div className="flex items-center justify-between">
+              
               <div className="">
-                <BiBorderLeft className="dark:text-[#45CBA0] text-black text-[30px]" />
-                <h1 className="py-2 font-Poppins dark:text-white text-black text-[20px]">
+                
+                <BiBorderLeft className="dark:text-[#45CBA0] text-black lg:text-[30px] text-[20px]" />
+                <h1 className="py-2 font-Poppins dark:text-white text-black text-[20px] ">
                   {ordersComparePercentage?.currentMonth}
                 </h1>
 
-                <h1 className=" py-2 font-Poppins dark:text-[#45CBA0] text-black text-[20px]">
-                  Sales Obtained
-                </h1>
+                
               </div>
-              <div>
+              <div >
                 <CircularProgressWithLabel
                   value={ordersComparePercentage?.percentage}
                   open={open}
+                  
                 />
-                <h1 className="text-center pt-4 dark:text-white text-black">
+                <h1 className="text-center lg:pt-4 dark:text-white text-black text-[14px]">
                   {ordersComparePercentage?.percentage > 0
                     ? "+" + ordersComparePercentage?.percentage.toFixed(2)
                     : "-" + ordersComparePercentage?.percentage.toFixed(2)}
@@ -131,23 +135,24 @@ const DashboardWidget: FC<Props> = ({ open }) => {
             </div>
           </div>
 
-          <div className="w-full dark:bg-[#111C43] rounded-sm shadow my-4">
+          <div className="w-[50%] lg:w-full dark:bg-[#111C43] rounded-sm shadow my-4 ">
+          <h1 className=" mt-4 font-Poppins dark:text-[#45CBA0] text-black lg:text-[20px] text-[15px] ps-2">
+                  new Users
+                </h1>
             <div className="flex items-center p-2 justify-between">
               <div className="">
-                <PiUsersFourLight className="dark:text-[#45CBA0] text-black text-[30px]" />
+                <PiUsersFourLight className="dark:text-[#45CBA0] text-black lg:text-[30px] text-[20px]" />
                 <h1 className="py-2 font-Poppins dark:text-white text-black text-[20px]">
                   {userComparePercentage?.currentMonth}
                 </h1>
-                <h1 className=" py-2 font-Poppins dark:text-[#45CBA0] text-black text-[20px]">
-                  new Users
-                </h1>
+                
               </div>
               <div>
                 <CircularProgressWithLabel
                   value={userComparePercentage?.percentage}
                   open={open}
                 />
-                <h1 className="text-center pt-4 dark:text-white text-black">
+                <h1 className="text-center lg:pt-4 dark:text-white text-black text-[14px]">
                   {userComparePercentage?.percentage > 0
                     ? "+" + userComparePercentage?.percentage.toFixed(2)
                     : "-" + userComparePercentage?.percentage.toFixed(2)}
@@ -159,7 +164,7 @@ const DashboardWidget: FC<Props> = ({ open }) => {
         </div>
       </div>
       <div className="  mt-[10px] mb-5">
-        <div className=" w-[94%]  shadow m-auto h-[60vh]">
+        <div className=" w-[94%]  shadow m-auto ">
           <OrderAnalytics DashBoard={true} />
         </div>
       </div>
@@ -167,7 +172,7 @@ const DashboardWidget: FC<Props> = ({ open }) => {
         <h3 className="dark:text-white text-black  text-[20px] font-Poppins font-[400] pb-10 ps-10 mt-5 ">
           Recent Transaction
         </h3>
-        <div className="mb-10 ps-10">
+        <div className="mb-10 md:ps-10 ps-4 w-[100%]">
           <AllInvoices isDashBoard={false} />
         </div>
       </div>
