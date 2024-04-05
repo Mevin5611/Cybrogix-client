@@ -46,6 +46,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
           }w-[230px] h-screen overflow-y-auto p-5  fixed left-0 bg-[#1b1e64]`}
         >
           <div className="flex justify-between w-full items-center ">
+            <Link href={"/"}>
             <h1
               className={`${
                 Collapse && "hidden"
@@ -53,6 +54,7 @@ const AdminSidebar: FC<Props> = ({ select, setSelect }) => {
             >
               Cybrogix 
             </h1>
+            </Link>
 
             <div onClick={() => setCollapse(!Collapse)}>
               {Collapse ? (

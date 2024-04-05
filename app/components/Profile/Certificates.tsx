@@ -17,11 +17,12 @@ const Certificates = ({ user }: Props) => {
           Download your certificate in here
         </h1>
 
-        <div className="grid grid-cols-4">
+        <div className="grid  col-span-1 md:grid-cols-3 lg:grid-cols-4">
           {user &&
             user.certificates.map((item: any, index: number) => (
               <Certificate key={index} item={item} />
             ))}
+          
         </div>
       </div>
     </div>
