@@ -299,7 +299,7 @@ const CourseMedia = ({
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               className="outline-none bg-transparent  border border-[#000000d8] 800px:w-full p-2 rounded dark:border-[#ffffff57]  w-[90%] 800px:text-[18px] font-Poppins"
-              placeholder="Write your comment here..."
+              placeholder="Write your question here..."
             ></textarea>
           </div>
           <div className="w-full flex justify-end">
@@ -384,7 +384,7 @@ const CourseMedia = ({
                   rows={5}
                   value={review}
                   onChange={(e) => setReview(e.target.value)}
-                  className="outline-none bg-transparent  border border-[#ffffff57] dark:border-[#ffffff57] 800px:w-full p-2 rounded  w-[90%] 800px:text-[18px] font-Poppins"
+                  className="outline-none bg-transparent dark:text-white text-black border border-[#000000d8] dark:border-[#ffffff57] 800px:w-full p-2 rounded  w-[90%] 800px:text-[18px] font-Poppins"
                   placeholder="Write your comment here..."
                 ></textarea>
                 <div className="w-full flex justify-end">
