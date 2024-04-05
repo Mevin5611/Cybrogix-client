@@ -163,7 +163,7 @@ const CourseMedia = ({
     }
     if (reviewSuccess) {
       setReview("");
-      refetch();
+      courseFetch();
       socketId.emit("notification", {
         title: "New Review Recived",
         message: `You Have a new Review in ${data.content[activeVideo].title}`,
@@ -255,7 +255,7 @@ const CourseMedia = ({
       </div>
       <br />
       {activeBar === 0 && (
-        <h1 className="font-Poppins font-[400] to-black dark:text-white">
+        <h1 className="font-Poppins font-[400] text-black dark:text-white">
           {data.content[activeVideo]?.description}
         </h1>
       )}
