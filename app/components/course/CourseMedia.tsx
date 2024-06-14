@@ -210,7 +210,7 @@ const CourseMedia = ({
       />
       <div className="w-full flex items-center justify-between p-5 ">
         <div
-          className={`${styles.button} !md:min-h-[40px] min-h-[30px] !md:w-[190px] w-[70px] py-[unset] ${
+          className={`${styles.button} !md:min-h-[40px] min-h-[30px] lg:w-[300px] w-[70px] py-[unset] ${
             activeVideo === 0 && "!cursor-no-drop opacity-[.8]"
           } flex items-center `}
           onClick={() =>
@@ -221,7 +221,7 @@ const CourseMedia = ({
         </div>
 
         <div
-          className={`${styles.button} !md:min-h-[40px] min-h-[30px] !md:w-[190px] w-[70px] py-[unset]  ${
+          className={`${styles.button} md:min-h-[40px] min-h-[30px] lg:w-[300px] w-[70px] py-[unset]  ${
             data?.content.length - 1 === activeVideo &&
             "!cursor-no-drop opacity-[.8]"
           } flex items-center `}

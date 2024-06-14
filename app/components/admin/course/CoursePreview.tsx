@@ -38,6 +38,7 @@ const CoursePreview: FC<Props> = ({
           <CoursePlayer
             videoUrl={courseData?.demoUrl}
             title={courseData?.title}
+            isEdit={isEdit}
           />
         </div>
 

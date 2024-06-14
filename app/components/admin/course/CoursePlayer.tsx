@@ -4,9 +4,10 @@ import React, { FC, useEffect, useState } from "react";
 type Props = {
   videoUrl: string;
   title: string;
+  isEdit?: boolean;
 };
 
-const CoursePlayer: FC<Props> = ({ videoUrl, title }) => {
+const CoursePlayer: FC<Props> = ({ videoUrl, title,isEdit }) => {
   /* const [videodata, setVideoData] = useState({
     otp: "",
     playbackInfo: "",
@@ -27,7 +28,7 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title }) => {
     >
       <iframe
         width="100%"
-        height="550"
+        height={isEdit ? '550' : '500'}
         src={`https://www.youtube.com/embed/${videoUrl}`}
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
