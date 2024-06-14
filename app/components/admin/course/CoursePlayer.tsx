@@ -7,25 +7,34 @@ type Props = {
 };
 
 const CoursePlayer: FC<Props> = ({ videoUrl, title }) => {
-  const [videodata, setVideoData] = useState({
+  /* const [videodata, setVideoData] = useState({
     otp: "",
     playbackInfo: "",
   });
 
   useEffect(() => {
     axios
-      .post('https://cybrogix-server.onrender.com/api/lms/getVideoCipherOTP', {
+      .post("https://cybrogix-server.onrender.com/api/lms/getVideoCipherOTP", {
         videoId: videoUrl,
       })
       .then((res) => {
         setVideoData(res.data);
       });
-  }, [videoUrl]);
+  }, [videoUrl]); */
   return (
     <div
-      style={{ paddingTop: "50%", position: "relative", overflow: "hidden" }}
+    /* style={{ paddingTop: "50%", position: "relative", overflow: "hidden" }} */
     >
-      {videodata.otp && videodata.playbackInfo !== "" && (
+      <iframe
+        width="100%"
+        height="550"
+        src={`https://www.youtube.com/embed/${videoUrl}`}
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen={true}
+      ></iframe>
+      {/* {videodata.otp && videodata.playbackInfo !== "" && (
         <iframe
           src={`https://player.vdocipher.com/v2/?otp=${videodata.otp}&playbackInfo=${videodata.playbackInfo}&player=L87b6IzuW3z12mbx`}
           style={{
@@ -40,7 +49,7 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title }) => {
           allowFullScreen={true}
           allow="encrypted-media"
         ></iframe>
-      )}
+      )} */}
     </div>
   );
 };
