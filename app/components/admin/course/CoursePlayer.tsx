@@ -8,7 +8,7 @@ type Props = {
 };
 
 const CoursePlayer: FC<Props> = ({ videoUrl, title,isEdit }) => {
-  const [videodata, setVideoData] = useState({
+  /* const [videodata, setVideoData] = useState({
     otp: "",
     playbackInfo: "",
   });
@@ -21,12 +21,12 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title,isEdit }) => {
       .then((res) => {
         setVideoData(res.data);
       });
-  }, [videoUrl]);
+  }, [videoUrl]); */
   return (
     <div
     /* style={{ paddingTop: "50%", position: "relative", overflow: "hidden" }} */
     >
-      {/* <iframe
+      <iframe
         width="100%"
         height={isEdit ? '550' : '500'}
         src={`https://www.youtube.com/embed/${videoUrl}`}
@@ -34,8 +34,8 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title,isEdit }) => {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen={true}
-      ></iframe> */}
-      {videodata.otp && videodata.playbackInfo !== "" && (
+      ></iframe>
+      {/* {videodata.otp && videodata.playbackInfo !== "" && (
         <iframe
           src={`https://player.vdocipher.com/v2/?otp=${videodata.otp}&playbackInfo=${videodata.playbackInfo}&player=L87b6IzuW3z12mbx`}
           style={{
@@ -50,7 +50,7 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title,isEdit }) => {
           allowFullScreen={true}
           allow="encrypted-media"
         ></iframe>
-      )}
+      )} */}
     </div>
   );
 };
